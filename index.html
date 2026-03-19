@@ -104,6 +104,43 @@
         .readme-content pre { background: #111; color: #fff; padding: 1.5rem; border-radius: 4px; overflow-x: auto; margin: 2rem 0; border: 2px solid #333; }
         .readme-content code { background: #ddd; color: #111; padding: 0.2rem 0.4rem; border-radius: 2px; font-family: monospace; font-size: 0.9em; border: 1px solid #111;}
         .readme-content pre code { background: transparent; color: inherit; border: none; padding: 0;}
+
+        .pill-container {
+            height: 56px; /* On donne une hauteur fixe au parent */
+            display: flex;
+            align-items: center;
+        }
+
+        .color-pill {
+            width: 56px;
+            height: 56px;
+            border: 3px solid #111;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+            box-shadow: 6px 6px 0px 0px #111;
+            white-space: nowrap;
+        }
+
+        .color-pill:hover {
+            box-shadow: 0px 0px 0px 0px #111;
+        }
+
+        .hex-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 900;
+            font-size: 14px;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateX(-10px);
+            pointer-events: none;
+            padding: 0 20px;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -149,10 +186,22 @@
                         NPR SPECIALIST<br>
                         OPEN SOURCE DEV
                     </div>
-                    <div class="flex gap-2" id="color-dots">
-                        <div class="w-10 h-10 bg-pastelBlue border-2 border-dark rounded-full hover:scale-110 transition-transform cursor-pointer floating" style="animation-delay: 0s;"></div>
-                        <div class="w-10 h-10 bg-pastelPink border-2 border-dark rounded-full hover:scale-110 transition-transform cursor-pointer floating" style="animation-delay: 0.2s;"></div>
-                        <div class="w-10 h-10 bg-pastelYellow border-2 border-dark rounded-full hover:scale-110 transition-transform cursor-pointer floating" style="animation-delay: 0.4s;"></div>
+                    <div class="flex items-center gap-6" id="color-dots">
+                        <div class="pill-container floating" style="animation-delay: 0s;">
+                            <div class="color-pill group bg-pastelBlue" data-hex="#DCDDFF">
+                                <span class="hex-value">#DCDDFF</span>
+                            </div>
+                        </div>
+                        <div class="pill-container floating" style="animation-delay: 0.2s;">
+                            <div class="color-pill group bg-pastelPink" data-hex="#FBD2F5">
+                                <span class="hex-value">#FBD2F5</span>
+                            </div>
+                        </div>
+                        <div class="pill-container floating" style="animation-delay: 0.4s;">
+                            <div class="color-pill group bg-pastelYellow" data-hex="#FFDE9F">
+                                <span class="hex-value">#FFDE9F</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -347,6 +396,49 @@
         });
 
         AOS.init({ duration: 800, once: true });
+
+
+        // --- ANIMATION DES PASTILLES DE COULEUR ---
+        const pills = document.querySelectorAll('.color-pill');
+
+        pills.forEach(pill => {
+            const hexText = pill.querySelector('.hex-value');
+            
+            // Création d'une timeline par pastille pour un contrôle total
+            let tl = gsap.timeline({ paused: true });
+            
+            tl.to(pill, {
+                width: 160,       // Largeur de la pill étendue
+                borderRadius: "12px", // On devient un carré arrondi
+                duration: 0.4,
+                ease: "expo.out"
+            })
+            .to(hexText, {
+                opacity: 1,
+                x: 0,
+                duration: 0.3,
+                ease: "power2.out"
+            }, "-=0.2");
+
+            pill.addEventListener('mouseenter', () => tl.play());
+            pill.addEventListener('mouseleave', () => tl.reverse());
+
+            // Effet de clic "Copy to Clipboard"
+            pill.addEventListener('click', () => {
+                const hex = pill.getAttribute('data-hex');
+                navigator.clipboard.writeText(hex);
+                
+                // Petit feedback visuel brutaliste au clic
+                gsap.fromTo(pill, 
+                    { scale: 0.95 }, 
+                    { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.3)" }
+                );
+                
+                const originalText = hexText.innerText;
+                hexText.innerText = "COPIÉ !";
+                setTimeout(() => { hexText.innerText = originalText; }, 1000);
+            });
+        });
 
         // --- 4. GESTION GITHUB API ---
         const USERNAME = 'legralltitouan';
