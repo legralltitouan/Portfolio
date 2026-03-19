@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITOUAN LEGRALL | CREATIVE PORTFOLIO</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#F5F2E8', dark: '#111',
+                        pastelBlue: '#DCDDFF', pastelPink: '#FBD2F5', pastelYellow: '#FFDE9F', pastelGreen: '#D5F2E3'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Helvetica', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+
+        /* On utilise la puissance des polices variables */
+    .variable-font {
+        font-family: 'Inter', sans-serif;
+        font-variation-settings: "wght" 100; /* Départ très fin */
+        display: inline-block;
+        white-space: pre; /* Garde les espaces entre les mots */
+    }
+
+    .header-container {
+        padding-top: 15vh;
+        padding-bottom: 10vh;
+    }
+
+    .star-separator {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        font-size: 14px;
+        font-weight: 900;
+    }
+
+    /* Style spécifique pour les lettres individuelles */
+    .char {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+        body { background-color: #F5F2E8; color: #111; overflow-x: hidden; }
+        
+        .giant-text { font-size: clamp(3rem, 12vw, 15rem); line-height: 0.85; letter-spacing: -0.05em; font-weight: 900; text-transform: uppercase; }
+        .mono-detail { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em; }
+
+        /* Marquee */
+        .marquee-container { border-top: 2px solid #111; border-bottom: 2px solid #111; overflow: hidden; white-space: nowrap; background: #FFDE9F; padding: 12px 0; }
+        .marquee-content { display: inline-block; animation: marquee 20s linear infinite; font-family: 'JetBrains Mono', monospace; font-weight: 900; font-size: 1.2rem; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Card 3D Style */
+        .project-card { transform-style: preserve-3d; transform: perspective(1000px); transition: transform 0.1s; height: 100%; }
+        .card-inner { transform: translateZ(30px); transition: transform 0.3s ease-out; height: 100%; border: 2px solid #111; }
+
+        /* Modal Clip-path */
+        #project-modal { clip-path: circle(0% at 50% 50%); transition: clip-path 0.8s cubic-bezier(0.85, 0, 0.15, 1); }
+        #project-modal.open { clip-path: circle(150% at 50% 50%); }
+
+        /* Image Bug Fixes in README */
+        .readme-content img { 
+            max-width: 100%; 
+            height: auto; 
+            max-height: 50vh; 
+            object-fit: contain; 
+            border: 2px solid #111; 
+            margin: 2rem auto; 
+            display: block; 
+            box-shadow: 6px 6px 0px 0px rgba(17,17,17,1);
+            background: white;
+        }
+        .readme-content pre { background: #111; color: #fff; padding: 1.5rem; border-radius: 4px; overflow-x: auto; margin: 2rem 0; border: 2px solid #333; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="fixed top-0 w-full z-40 px-6 py-8 flex justify-between items-center mix-blend-difference text-white pointer-events-none">
+        <div class="font-black text-2xl tracking-tighter pointer-events-auto">TL<span class="text-blue-500">.</span></div>
+        <div class="mono-detail pointer-events-auto border-b-2 border-white pb-1">TITOUAN LEGRALL // 2026</div>
+    </nav>
+
+    <header class="max-w-7xl mx-auto px-6 header-container">
+            <div class="star-separator mono-detail">
+                <div>✦ ✦ ✦</div>
+                <div class="hidden md:block opacity-40">PORTFOLIO V.3.0</div>
+                <div>✦ ✦ ✦</div>
+            </div>
+        
+            <h1 id="hero-title" class="giant-text mb-12 overflow-hidden" style="perspective: 1000px;">
+                CREATIVE<br>ENGINEER
+            </h1>
+        
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 border-t-4 border-dark pt-8">
+                <div class="md:col-span-7">
+                    <p class="text-3xl font-bold tracking-tight leading-none uppercase">
+                        Artiste 3D & Développeur.<br> 
+                        <span class="text-dark/40">Logiciel, Rendu & Design.</span>
+                    </p>
+                </div>
+                <div class="md:col-span-5 flex justify-between items-end">
+                    <div class="mono-detail text-right leading-tight opacity-60">
+                        BASED IN FRANCE<br>
+                        NPR SPECIALIST<br>
+                        OPEN SOURCE DEV
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="w-10 h-10 bg-pastelBlue border-2 border-dark rounded-full"></div>
+                        <div class="w-10 h-10 bg-pastelPink border-2 border-dark rounded-full"></div>
+                        <div class="w-10 h-10 bg-pastelYellow border-2 border-dark rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+    <div class="marquee-container mb-24">
+        <div class="marquee-content">
+            GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ BRUTALISM ✦ GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ BRUTALISM ✦
+        </div>
+    </div>
+
+    <section class="max-w-7xl mx-auto px-6 mb-32">
+        <div class="flex justify-between items-end mb-12 border-b-2 border-dark pb-4">
+            <h2 class="text-4xl font-black uppercase tracking-tighter">Projets & Labs</h2>
+            <span class="mono-detail" id="repo-count">CHARGEMENT...</span>
+        </div>
+        
+        <div id="unified-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 mb-32" data-aos="fade-up">
+        <div class="bg-dark text-white p-12 lg:p-20 shadow-[20px_20px_0px_0px_#DCDDFF]">
+            <h2 class="text-5xl lg:text-7xl font-black uppercase mb-16 tracking-tighter">Roadmap 2026</h2>
+            <div class="space-y-12">
+                <div class="flex flex-col md:flex-row gap-6 border-l-2 border-white/20 pl-8 relative">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 bg-white rounded-full"></div>
+                    <span class="mono-detail text-white/40 md:w-32">Q1-Q2</span>
+                    <div class="flex-grow">
+                        <h4 class="text-2xl font-bold uppercase">Advanced Shader Development</h4>
+                        <p class="text-white/60 mt-2">Expansion de Angora Shader avec des fonctionnalités de ray-tracing temps réel pour le Web.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-6 border-l-2 border-white/20 pl-8 relative">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 bg-white/20 rounded-full"></div>
+                    <span class="mono-detail text-white/40 md:w-32">Q3-Q4</span>
+                    <div class="flex-grow">
+                        <h4 class="text-2xl font-bold uppercase">Personal OS Environment</h4>
+                        <p class="text-white/60 mt-2">Création d'une interface desktop complète basée sur le cloud et Gemini API.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="p-12 border-t-2 border-dark flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="mono-detail">© 2026 TITOUAN LEGRALL</div>
+        <div class="flex gap-8 mono-detail font-bold">
+            <a href="#" class="hover:underline">TWITTER</a>
+            <a href="#" class="hover:underline">LINKEDIN</a>
+            <a href="https://github.com/legralltitouan" class="hover:underline">GITHUB</a>
+        </div>
+    </footer>
+
+    <div id="project-modal" class="fixed inset-0 z-50 bg-bg flex flex-col lg:flex-row overflow-hidden">
+        <div class="lg:w-2/5 bg-dark text-white p-12 flex flex-col justify-between relative shadow-2xl">
+            <button onclick="closeProject()" class="absolute top-8 left-8 w-12 h-12 bg-white text-dark rounded-full flex justify-center items-center hover:scale-110 transition">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="mt-20">
+                <div id="modal-lang" class="mono-detail border border-white/30 inline-block px-3 py-1 mb-6"></div>
+                <h2 id="modal-title" class="text-6xl font-black uppercase tracking-tighter leading-none mb-6"></h2>
+                <p id="modal-description" class="text-xl text-white/70 mb-12"></p>
+                <div class="flex gap-8 mb-12">
+                    <div><span id="modal-stars" class="text-4xl font-black block">0</span><span class="mono-detail opacity-40">Stars</span></div>
+                    <div><span id="modal-forks" class="text-4xl font-black block">0</span><span class="mono-detail opacity-40">Forks</span></div>
+                </div>
+                <a id="modal-github-link" target="_blank" class="block w-full py-5 bg-white text-dark text-center font-black uppercase tracking-widest hover:bg-blue-500 hover:text-white transition">VOIR LE CODE ↗</a>
+            </div>
+        </div>
+        <div class="lg:w-3/5 overflow-y-auto p-8 lg:p-20">
+            <div id="readme-viewer" class="readme-content max-w-3xl mx-auto"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+        const title = document.getElementById('hero-title');
+        const text = title.innerHTML.trim();
+        
+        // On nettoie et on sépare le texte en lettres individuelles
+        // tout en gardant les balises <br>
+        let newHTML = "";
+        const lines = text.split('<br>');
+        
+        lines.forEach((line, index) => {
+            const words = line.split('');
+            words.forEach(char => {
+                if(char === " ") {
+                    newHTML += `<span>&nbsp;</span>`;
+                } else {
+                    newHTML += `<span class="char variable-font">${char}</span>`;
+                }
+            });
+            if(index < lines.length - 1) newHTML += "<br>";
+        });
+        
+        title.innerHTML = newHTML;
+
+        // Animation GSAP
+        const tl = gsap.timeline();
+
+        tl.to(".char", {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.05, // Apparition une par une
+            ease: "expo.out"
+        });
+
+        tl.to(".char", {
+            fontVariationSettings: "'wght' 900", // Changement progressif de l'épaisseur
+            duration: 1.2,
+            stagger: 0.04,
+            ease: "power2.inOut"
+        }, "-=0.6"); // Commence un peu avant la fin de l'apparition
+    });
+
+
+        AOS.init({ duration: 800, once: true });
+
+        const USERNAME = 'legralltitouan';
+        const COLORS = ['bg-pastelBlue', 'bg-pastelPink', 'bg-pastelYellow', 'bg-pastelGreen'];
+
+        /*async function fetchAllRepos() {
+            try {
+                const response = await fetch(`https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=100`);
+                const repos = await response.json();
+                document.getElementById('repo-count').innerText = `${repos.length} PROJETS TROUVÉS`;
+                renderGrid(repos);
+            } catch (error) { console.error(error); }
+        }*/
+
+        async function fetchAllRepos() {
+    try {
+        const response = await fetch(`https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=100`);
+        if (!response.ok) throw new Error('Quota atteint'); // Force l'erreur si l'API bloque
+        const repos = await response.json();
+        document.getElementById('repo-count').innerText = `${repos.length} PROJETS TROUVÉS`;
+        renderGrid(repos);
+    } catch (error) {
+        console.error("GitHub API Error:", error);
+        document.getElementById('repo-count').innerText = `MODE HORS-LIGNE`;
+        
+        // Données de secours pour que le site reste beau
+        const fallbackRepos = [
+            { name: "Angora Shader", language: "GLSL", description: "Shader NPR avancé pour Blender & WebGL.", stargazers_count: 12, forks_count: 2 },
+            { name: "Creative-Engine", language: "JavaScript", description: "Framework de rendu minimaliste.", stargazers_count: 5, forks_count: 1 }
+        ];
+        renderGrid(fallbackRepos);
+    }
+}
+
+        function renderGrid(repos) {
+            const grid = document.getElementById('unified-grid');
+            grid.innerHTML = '';
+
+            repos.forEach((repo, index) => {
+                const colorClass = COLORS[index % COLORS.length];
+                const card = document.createElement('div');
+                card.className = "group";
+                card.setAttribute('data-aos', 'fade-up');
+                card.setAttribute('data-aos-delay', (index % 3) * 50);
+
+                card.innerHTML = `
+                    <div class="project-card cursor-pointer" onmousemove="tilt(event, this)" onmouseleave="reset(this)" onclick="openProject('${repo.name}', '${repo.default_branch}')">
+                        <div class="card-inner ${colorClass} p-8 flex flex-col justify-between shadow-[8px_8px_0px_0px_#111] hover:shadow-[16px_16px_0px_0px_#111] transition-all">
+                            <div class="flex justify-between items-start mb-20">
+                                <span class="text-4xl font-black opacity-20">${(index + 1).toString().padStart(2, '0')}</span>
+                                <span class="mono-detail font-bold bg-white border-2 border-dark px-3 py-1">${repo.language || 'DATA'}</span>
+                            </div>
+                            <div>
+                                <h3 class="text-3xl font-black uppercase tracking-tighter leading-none mb-4 break-words">${repo.name}</h3>
+                                <p class="font-medium text-dark/70 line-clamp-2">${repo.description || 'Projet en cours d\'expérimentation.'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function tilt(e, el) {
+            const rect = el.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+            const y = ((e.clientY - rect.top) / rect.height - 0.5) * -20;
+            el.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale3d(1.02, 1.02, 1.02)`;
+        }
+
+        function reset(el) { el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`; }
+
+        async function openProject(name, branch) {
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+
+            const res = await fetch(`https://api.github.com/repos/${USERNAME}/${name}`);
+            const repo = await res.json();
+
+            document.getElementById('modal-title').innerText = repo.name;
+            document.getElementById('modal-description').innerText = repo.description || '';
+            document.getElementById('modal-lang').innerText = repo.language || 'SOURCE';
+            document.getElementById('modal-stars').innerText = repo.stargazers_count;
+            document.getElementById('modal-forks').innerText = repo.forks_count;
+            document.getElementById('modal-github-link').href = repo.html_url;
+
+            const viewer = document.getElementById('readme-viewer');
+            viewer.innerHTML = '<p class="mono-detail animate-pulse py-20 text-center">COMPILING DOCUMENTATION...</p>';
+
+            try {
+                const readmeRes = await fetch(`https://api.github.com/repos/${USERNAME}/${name}/readme`, {
+                    headers: { 'Accept': 'application/vnd.github.v3.raw' }
+                });
+                let text = await readmeRes.text();
+                const rawUrl = `https://raw.githubusercontent.com/${USERNAME}/${name}/${branch}/`;
+                text = text.replace(/!\[(.*?)\]\((?!http)(.*?)\)/g, `![$1](${rawUrl}$2)`);
+                text = text.replace(/<img([^>]+)src=["'](?!http)([^"']+)["']/g, `<img$1src="${rawUrl}$2"`);
+                viewer.innerHTML = marked.parse(text);
+            } catch (e) { viewer.innerHTML = '<p class="mono-detail opacity-30 text-center py-20">NO README FOUND.</p>'; }
+        }
+
+        function closeProject() {
+            document.getElementById('project-modal').classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+
+        fetchAllRepos();
+    </script>
+</body>
+</html>
