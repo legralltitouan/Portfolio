@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITOUAN LEGRALL | CREATIVE PORTFOLIO</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#F5F2E8', dark: '#111',
+                        pastelBlue: '#DCDDFF', pastelPink: '#FBD2F5', pastelYellow: '#FFDE9F', pastelGreen: '#D5F2E3'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Helvetica', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Styles Lenis obligatoires */
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-scrolling iframe { pointer-events: none; }
+
+        /* Désactiver le curseur par défaut sur les écrans non-tactiles */
+        @media (pointer: fine) {
+            body { cursor: none; }
+            a, button, .cursor-pointer, .pointer-hover { cursor: none !important; }
+        }
+
+        /* Custom Scrollbar Brutaliste */
+        ::-webkit-scrollbar { width: 14px; }
+        ::-webkit-scrollbar-track { background: #F5F2E8; border-left: 2px solid #111; }
+        ::-webkit-scrollbar-thumb { background: #111; border: 2px solid #F5F2E8; }
+        ::-webkit-scrollbar-thumb:hover { background: #333; }
+
+        /* Bruit visuel (Noise) pour l'effet matière brutaliste */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9998; opacity: 0.04; mix-blend-mode: multiply;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        body { background-color: #F5F2E8; color: #111; overflow-x: hidden; }
+
+        /* Police Variable */
+        .variable-font { font-family: 'Inter', sans-serif; font-variation-settings: "wght" 100; display: inline-block; white-space: pre; }
+        .header-container { padding-top: 15vh; padding-bottom: 10vh; }
+        .star-separator { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-size: 14px; font-weight: 900; }
+        .char { display: inline-block; opacity: 0; transform: translateY(30px) rotateX(-20deg); }
+        .giant-text { font-size: clamp(3rem, 12vw, 15rem); line-height: 0.85; letter-spacing: -0.05em; font-weight: 900; text-transform: uppercase; }
+        .mono-detail { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em; }
+
+        /* Animations Continues */
+        .star-spin { display: inline-block; animation: starPulse 3s ease-in-out infinite; }
+        @keyframes starPulse {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.3) rotate(180deg); color: #4b5563; }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+        
+        .floating { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Marquee */
+        .marquee-container { border-top: 2px solid #111; border-bottom: 2px solid #111; overflow: hidden; white-space: nowrap; background: #FFDE9F; padding: 12px 0; }
+        .marquee-content { display: inline-block; animation: marquee 20s linear infinite; font-family: 'JetBrains Mono', monospace; font-weight: 900; font-size: 1.2rem; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Card 3D Style */
+        .project-card { transform-style: preserve-3d; transform: perspective(1000px); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); height: 100%; }
+        .card-inner { transform: translateZ(30px); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); height: 100%; border: 2px solid #111; }
+
+        /* Modal Clip-path */
+        #project-modal { clip-path: circle(0% at 50% 50%); transition: clip-path 0.8s cubic-bezier(0.85, 0, 0.15, 1); }
+        #project-modal.open { clip-path: circle(150% at 50% 50%); }
+        .modal-stagger-item { opacity: 0; transform: translateY(20px); }
+
+        /* Roadmap Scroll Styles */
+        .roadmap-item { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.3; border-color: rgba(255,255,255,0.1); }
+        .roadmap-item .roadmap-dot { transition: all 0.5s ease; background-color: rgba(255,255,255,0.2); transform: scale(1); }
+        
+        .roadmap-item.is-active { opacity: 1; border-color: rgba(255,255,255,1); transform: translateX(10px); }
+        .roadmap-item.is-active .roadmap-dot { background-color: #FFDE9F; transform: scale(1.5); box-shadow: 0 0 15px rgba(255, 222, 159, 0.5); }
+
+        /* Bouton de fermeture modale Néo-Brutaliste */
+        .btn-close-modal {
+            border: 3px solid #111;
+            background: #FFDE9F;
+            box-shadow: 4px 4px 0px 0px #111;
+            transition: all 0.2s ease-out;
+            font-weight: 900;
+        }
+        .btn-close-modal:hover {
+            box-shadow: 0px 0px 0px 0px #111;
+            transform: translate(4px, 4px);
+            background: #FBD2F5;
+        }
+
+        /* Styles Markdown (README) Améliorés */
+        .readme-content { opacity: 1; }
+        .readme-content h1, .readme-content h2, .readme-content h3 { font-weight: 900; text-transform: uppercase; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #111; padding-bottom: 0.5rem; }
+        .readme-content h1 { font-size: 2.5rem; letter-spacing: -0.05em; }
+        .readme-content p { margin-bottom: 1.5rem; line-height: 1.6; font-size: 1.125rem; }
+        .readme-content pre { background: #111; color: #DCDDFF; padding: 1.5rem; border-radius: 0px; overflow-x: auto; margin: 2rem 0; border: 3px solid #111; box-shadow: 6px 6px 0px 0px #111;}
+        .readme-content code { background: #FFDE9F; color: #111; padding: 0.2rem 0.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; font-weight: bold; border: 2px solid #111;}
+        .readme-content pre code { background: transparent; color: inherit; border: none; padding: 0; font-weight: normal;}
+        .readme-content blockquote { border-left: 6px solid #111; background: #DCDDFF; padding: 1rem 1.5rem; margin: 1.5rem 0; font-style: italic; font-weight: 700; border-right: 2px solid #111; border-top: 2px solid #111; border-bottom: 2px solid #111;}
+        .readme-content ul { list-style-type: square; padding-left: 2rem; margin-bottom: 1.5rem; font-size: 1.125rem;}
+        .readme-content li { margin-bottom: 0.5rem; }
+        .readme-content a { color: #111; text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: #2563eb; font-weight: 900; transition: all 0.2s;}
+        .readme-content a:hover { background: #2563eb; color: #fff; }
+        .readme-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; border: 3px solid #111; background: white;}
+        .readme-content th, .readme-content td { border: 2px solid #111; padding: 1rem; text-align: left; }
+        .readme-content th { background: #D5F2E3; font-weight: 900; text-transform: uppercase; }
+
+        /* NOUVEAU: Styles pour les images du Markdown (interactives) */
+        .readme-content img { 
+            max-width: 100%; height: auto; max-height: 50vh; object-fit: contain; 
+            border: 3px solid #111; margin: 2rem auto; display: block; 
+            box-shadow: 8px 8px 0px 0px rgba(17,17,17,1); background: white;
+            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+        }
+        .readme-content img:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px 0px rgba(17,17,17,1);
+        }
+
+        .pill-container { height: 56px; display: flex; align-items: center; }
+        .color-pill { width: 56px; height: 56px; border: 3px solid #111; border-radius: 999px; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; transition: box-shadow 0.3s ease; box-shadow: 6px 6px 0px 0px #111; white-space: nowrap; }
+        .color-pill:hover { box-shadow: 0px 0px 0px 0px #111; }
+        .hex-value { font-family: 'JetBrains Mono', monospace; font-weight: 900; font-size: 14px; text-transform: uppercase; opacity: 0; transform: translateX(-10px); pointer-events: none; padding: 0 20px; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="noise-overlay"></div>
+
+    <div id="custom-cursor" class="fixed top-0 left-0 w-32 h-32 pointer-events-none z-[9999] hidden md:flex items-center justify-center mix-blend-difference" style="transform: translate(-50%, -50%);">
+        <svg viewBox="0 0 100 100" class="absolute w-full h-full animate-[spin_8s_linear_infinite]">
+            <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
+            <text class="text-[10px] font-mono fill-white uppercase font-bold tracking-widest">
+                <textPath href="#circlePath" startOffset="0%">✦ CREATIVE DEV ✦ TITOUAN </textPath>
+            </text>
+        </svg>
+        <div id="cursor-dot" class="absolute w-2 h-2 bg-white rounded-full transition-transform duration-300"></div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-40 px-6 py-8 flex justify-between items-center mix-blend-difference text-white pointer-events-none" data-aos="fade-down" data-aos-duration="1000">
+        <div class="font-black text-2xl tracking-tighter pointer-events-auto cursor-pointer" id="logo-hover">TL<span class="text-blue-500">.</span></div>
+        <div class="mono-detail pointer-events-auto border-b-2 border-white pb-1">TITOUAN LEGRALL // 2026</div>
+    </nav>
+
+    <header class="max-w-7xl mx-auto px-6 header-container">
+        <div class="star-separator mono-detail">
+            <div><span class="star-spin">✦</span> <span class="star-spin" style="animation-delay: 0.2s">✦</span> <span class="star-spin" style="animation-delay: 0.4s">✦</span></div>
+            <div class="hidden md:block opacity-40">PORTFOLIO V.3.0</div>
+            <div><span class="star-spin" style="animation-delay: 0.4s">✦</span> <span class="star-spin" style="animation-delay: 0.2s">✦</span> <span class="star-spin">✦</span></div>
+        </div>
+    
+        <h1 id="hero-title" class="giant-text mb-12 overflow-hidden" style="perspective: 1000px;">
+            CREATIVE<br>ENGINEER
+        </h1>
+    
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 border-t-4 border-dark pt-8" data-aos="fade-up" data-aos-delay="500">
+            <div class="md:col-span-7">
+                <p class="text-3xl font-bold tracking-tight leading-none uppercase">
+                    Artiste 3D & Développeur.<br> 
+                    <span class="text-dark/40">Logiciel, Rendu & Design.</span>
+                </p>
+            </div>
+            <div class="md:col-span-5 flex justify-between items-end">
+                <div class="mono-detail text-right leading-tight opacity-60">
+                    BASED IN FRANCE<br>
+                    NPR SPECIALIST<br>
+                    OPEN SOURCE DEV
+                </div>
+                <div class="flex items-center gap-6" id="color-dots">
+                    <div class="pill-container floating" style="animation-delay: 0s;">
+                        <div class="color-pill group bg-pastelBlue" data-hex="#DCDDFF">
+                            <span class="hex-value">#DCDDFF</span>
+                        </div>
+                    </div>
+                    <div class="pill-container floating" style="animation-delay: 0.2s;">
+                        <div class="color-pill group bg-pastelPink" data-hex="#FBD2F5">
+                            <span class="hex-value">#FBD2F5</span>
+                        </div>
+                    </div>
+                    <div class="pill-container floating" style="animation-delay: 0.4s;">
+                        <div class="color-pill group bg-pastelYellow" data-hex="#FFDE9F">
+                            <span class="hex-value">#FFDE9F</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="marquee-container mb-24 cursor-pointer hover:bg-pastelPink transition-colors duration-500" data-aos="fade-in" data-aos-delay="700">
+        <div class="marquee-content">
+            GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ BRUTALISM ✦ GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ BRUTALISM ✦
+        </div>
+    </div>
+
+    <section class="max-w-7xl mx-auto px-6 mb-32">
+        <div class="flex justify-between items-end mb-12 border-b-2 border-dark pb-4">
+            <h2 class="text-4xl font-black uppercase tracking-tighter">Projets & Labs</h2>
+            <span class="mono-detail" id="repo-count">CHARGEMENT...</span>
+        </div>
+        
+        <div id="unified-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 mb-32 relative">
+        <div class="bg-dark text-white p-12 lg:p-20 shadow-[20px_20px_0px_0px_#DCDDFF] relative overflow-hidden group">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-pastelBlue rounded-full mix-blend-overlay opacity-10 group-hover:scale-[2] transition-transform duration-1000 ease-out"></div>
+            
+            <h2 class="text-5xl lg:text-7xl font-black uppercase mb-20 tracking-tighter relative z-10" data-aos="fade-right">Roadmap 2026</h2>
+            
+            <div class="space-y-16 relative z-10 ml-4">
+                <div class="roadmap-item flex flex-col md:flex-row gap-8 border-l-4 pl-10 relative py-4">
+                    <div class="roadmap-dot absolute -left-[10px] top-6 w-4 h-4 rounded-full"></div>
+                    <span class="mono-detail text-white/50 md:w-32 pt-1 font-bold">Q1 - 2026</span>
+                    <div class="flex-grow">
+                        <h4 class="text-3xl font-black uppercase tracking-tight">Advanced Shader WebGL</h4>
+                        <p class="text-white/60 mt-3 text-lg">Expansion de Angora Shader avec des fonctionnalités de ray-tracing temps réel injectées directement dans le DOM pour le Web.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item flex flex-col md:flex-row gap-8 border-l-4 pl-10 relative py-4">
+                    <div class="roadmap-dot absolute -left-[10px] top-6 w-4 h-4 rounded-full"></div>
+                    <span class="mono-detail text-white/50 md:w-32 pt-1 font-bold">Q2 - 2026</span>
+                    <div class="flex-grow">
+                        <h4 class="text-3xl font-black uppercase tracking-tight">Creative Engine V2</h4>
+                        <p class="text-white/60 mt-3 text-lg">Refonte totale de l'architecture. Implémentation du support WebGPU pour des performances de rendu multipliées par 10 sur des scènes complexes.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item flex flex-col md:flex-row gap-8 border-l-4 pl-10 relative py-4">
+                    <div class="roadmap-dot absolute -left-[10px] top-6 w-4 h-4 rounded-full"></div>
+                    <span class="mono-detail text-white/50 md:w-32 pt-1 font-bold">Q3 - 2026</span>
+                    <div class="flex-grow">
+                        <h4 class="text-3xl font-black uppercase tracking-tight">Personal OS Environment</h4>
+                        <p class="text-white/60 mt-3 text-lg">Création d'une interface desktop complète basée sur le cloud et Gemini API. Un environnement de travail qui repense le concept de système d'exploitation.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item flex flex-col md:flex-row gap-8 border-l-4 pl-10 relative py-4">
+                    <div class="roadmap-dot absolute -left-[10px] top-6 w-4 h-4 rounded-full"></div>
+                    <span class="mono-detail text-white/50 md:w-32 pt-1 font-bold">Q4 - 2026</span>
+                    <div class="flex-grow">
+                        <h4 class="text-3xl font-black uppercase tracking-tight">Open Source Lab Release</h4>
+                        <p class="text-white/60 mt-3 text-lg">Publication de la suite complète d'outils de rendu NPR pour Blender, accompagnés d'une documentation interactive et de tutoriels vidéos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 mb-32 relative" data-aos="zoom-in" data-aos-duration="800">
+        <div class="border-4 border-dark bg-pastelGreen p-12 lg:p-24 text-center relative overflow-hidden group shadow-[15px_15px_0px_0px_#111]">
+            <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-white rounded-full mix-blend-overlay opacity-30 group-hover:scale-150 transition-transform duration-1000 ease-out animate-[spin_10s_linear_infinite] border-8 border-dashed border-dark"></div>
+            
+            <h2 class="text-6xl lg:text-8xl font-black uppercase tracking-tighter mb-4 relative z-10 text-dark">
+                Let's Talk.
+            </h2>
+            <p class="mono-detail text-xl mb-12 relative z-10 font-bold opacity-80">AVAILABLE FOR FREELANCE WORK</p>
+            
+            <a href="mailto:tonemail@exemple.com" class="magnetic-btn inline-block border-4 border-dark bg-pastelYellow text-dark px-10 py-6 text-2xl lg:text-4xl font-black uppercase tracking-widest shadow-[8px_8px_0px_0px_#111] hover:bg-dark hover:text-white transition-colors duration-300 relative z-10 pointer-hover">
+                ENVOYER UN EMAIL ↗
+            </a>
+        </div>
+    </section>
+
+    <footer class="p-12 border-t-2 border-dark flex flex-col md:flex-row justify-between items-center gap-8 bg-white relative z-10">
+        <div class="mono-detail">© 2026 TITOUAN LEGRALL</div>
+        <div class="flex gap-8 mono-detail font-bold">
+            <a href="#" class="hover:underline hover:text-blue-600 transition-colors pointer-hover">TWITTER</a>
+            <a href="#" class="hover:underline hover:text-blue-600 transition-colors pointer-hover">LINKEDIN</a>
+            <a href="https://github.com/legralltitouan" class="hover:underline hover:text-blue-600 transition-colors pointer-hover">GITHUB</a>
+        </div>
+    </footer>
+
+    <div id="project-modal" class="fixed inset-0 z-[200] bg-bg flex flex-col lg:flex-row overflow-hidden">
+        <div class="lg:w-2/5 bg-dark text-white p-12 flex flex-col justify-between relative shadow-2xl z-10">
+            <button onclick="closeProject()" class="absolute top-8 left-8 btn-close-modal text-dark px-4 py-2 flex items-center gap-3 pointer-hover z-50">
+                <i class="fas fa-times text-xl"></i>
+                <span class="mono-detail font-black pt-1">FERMER</span>
+            </button>
+            <div class="mt-20">
+                <div id="modal-lang" class="modal-stagger-item mono-detail border border-white/30 inline-block px-3 py-1 mb-6"></div>
+                <h2 id="modal-title" class="modal-stagger-item text-6xl font-black uppercase tracking-tighter leading-none mb-6"></h2>
+                <p id="modal-description" class="modal-stagger-item text-xl text-white/70 mb-12"></p>
+                <div class="modal-stagger-item flex gap-8 mb-12">
+                    <div><span id="modal-stars" class="text-4xl font-black block">0</span><span class="mono-detail opacity-40">Stars</span></div>
+                    <div><span id="modal-forks" class="text-4xl font-black block">0</span><span class="mono-detail opacity-40">Forks</span></div>
+                </div>
+                <a id="modal-github-link" target="_blank" class="modal-stagger-item block w-full py-5 bg-white text-dark text-center font-black uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-colors duration-300 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] hover:translate-y-1 hover:shadow-none transition-all pointer-hover">VOIR LE CODE ↗</a>
+            </div>
+        </div>
+        <div class="lg:w-3/5 overflow-y-auto p-8 lg:p-20 relative bg-[#F5F2E8]" data-lenis-prevent>
+            <div id="readme-viewer" class="readme-content max-w-3xl mx-auto text-dark"></div>
+        </div>
+    </div>
+
+    <div id="image-lightbox" class="fixed inset-0 z-[300] hidden items-center justify-center p-4 lg:p-12 pointer-events-none opacity-0">
+        <div class="absolute inset-0 bg-dark/80 backdrop-blur-md pointer-events-auto cursor-pointer pointer-hover" onclick="closeLightbox()"></div>
+        
+        <div id="lightbox-frame" class="relative z-10 max-w-5xl w-full flex flex-col pointer-events-auto transform scale-90 opacity-0">
+            
+            <div class="bg-pastelYellow border-4 border-b-0 border-dark p-3 flex justify-between items-center">
+                <div class="flex gap-3">
+                    <div class="w-4 h-4 rounded-full border-2 border-dark bg-pastelPink"></div>
+                    <div class="w-4 h-4 rounded-full border-2 border-dark bg-pastelBlue"></div>
+                    <div class="w-4 h-4 rounded-full border-2 border-dark bg-pastelGreen"></div>
+                </div>
+                <span class="mono-detail font-black tracking-widest">IMAGE_PREVIEW.EXE</span>
+                <button onclick="closeLightbox()" class="btn-close-modal px-2 py-1 flex items-center justify-center pointer-hover">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="border-4 border-dark bg-white p-4 shadow-[16px_16px_0px_0px_#111] relative">
+                <div class="absolute -top-8 -right-8 text-6xl text-pastelPink star-spin drop-shadow-[4px_4px_0px_#111]" style="z-index: 20;">✦</div>
+                <div class="absolute -bottom-6 -left-6 text-5xl text-pastelBlue star-spin drop-shadow-[4px_4px_0px_#111]" style="animation-duration: 4s; animation-direction: reverse; z-index: 20;">✦</div>
+                
+                <img id="lightbox-img" src="" alt="Aperçu HD" class="w-full h-auto max-h-[75vh] object-contain border-2 border-dark bg-bg">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // --- 0. INITIALISATION LENIS (SMOOTH SCROLL) ---
+        let lenis;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            lenis = new Lenis({
+                duration: 1.7,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+            });
+
+            lenis.on('scroll', ScrollTrigger.update);
+
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+        });
+
+        // --- 1. GESTION DU CURSEUR PERSONNALISÉ ---
+        const cursor = document.getElementById('custom-cursor');
+        const cursorDot = document.getElementById('cursor-dot');
+        
+        let xTo = gsap.quickTo(cursor, "left", {duration: 0.2, ease: "power3"});
+        let yTo = gsap.quickTo(cursor, "top", {duration: 0.2, ease: "power3"});
+
+        window.addEventListener('mousemove', (e) => {
+            xTo(e.clientX);
+            yTo(e.clientY);
+        });
+
+        function updateCursorInteractions() {
+            const interactiveElements = document.querySelectorAll('a, button, .cursor-pointer, .project-card, .pointer-hover, .readme-content img');
+            interactiveElements.forEach(el => {
+                // On évite d'ajouter l'event plusieurs fois
+                if (el.dataset.cursorBound) return;
+                
+                el.addEventListener('mouseenter', () => {
+                    cursorDot.style.transform = 'scale(3)';
+                    cursor.style.mixBlendMode = 'normal';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorDot.style.transform = 'scale(1)';
+                    cursor.style.mixBlendMode = 'difference';
+                });
+                el.dataset.cursorBound = "true";
+            });
+        }
+        
+        updateCursorInteractions();
+
+        // --- BOUTON MAGNÉTIQUE ---
+        const magneticBtns = document.querySelectorAll('.magnetic-btn');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+
+        // --- 2. INITIALISATION GSAP & SCROLLTRIGGER ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Animation du Titre
+            const title = document.getElementById('hero-title');
+            const text = title.innerHTML.trim();
+            let newHTML = "";
+            const lines = text.split('<br>');
+            
+            lines.forEach((line, index) => {
+                const words = line.split('');
+                words.forEach(char => {
+                    if(char === " ") newHTML += `<span>&nbsp;</span>`;
+                    else newHTML += `<span class="char variable-font">${char}</span>`;
+                });
+                if(index < lines.length - 1) newHTML += "<br>";
+            });
+            title.innerHTML = newHTML;
+
+            document.fonts.ready.then(() => {
+                const tl = gsap.timeline();
+                tl.to(".char", { opacity: 1, y: 0, rotationX: 0, duration: 0.8, stagger: 0.03, ease: "back.out(1.7)" });
+                tl.to(".char", { fontVariationSettings: "'wght' 900", duration: 1.2, stagger: 0.03, ease: "power2.inOut" }, "-=0.6");
+            });
+
+            // Animation du Roadmap au scroll
+            const roadmapItems = gsap.utils.toArray('.roadmap-item');
+            roadmapItems.forEach((item, i) => {
+                ScrollTrigger.create({
+                    trigger: item,
+                    start: "top 75%", 
+                    end: "bottom 25%",
+                    toggleClass: "is-active",
+                });
+            });
+        });
+
+        AOS.init({ duration: 800, once: true });
+
+        // --- ANIMATION DES PASTILLES DE COULEUR ---
+        const pills = document.querySelectorAll('.color-pill');
+
+        pills.forEach(pill => {
+            const hexText = pill.querySelector('.hex-value');
+            let tl = gsap.timeline({ paused: true });
+            
+            tl.to(pill, { width: 160, borderRadius: "12px", duration: 0.4, ease: "expo.out" })
+              .to(hexText, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, "-=0.2");
+
+            pill.addEventListener('mouseenter', () => tl.play());
+            pill.addEventListener('mouseleave', () => tl.reverse());
+
+            pill.addEventListener('click', () => {
+                const hex = pill.getAttribute('data-hex');
+                navigator.clipboard.writeText(hex);
+                gsap.fromTo(pill, { scale: 0.95 }, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.3)" });
+                const originalText = hexText.innerText;
+                hexText.innerText = "COPIÉ !";
+                setTimeout(() => { hexText.innerText = originalText; }, 1000);
+            });
+        });
+
+        // --- 3. GESTION DE LA LIGHTBOX (PREVIEW IMAGE) ---
+        function openLightbox(src) {
+            const lightbox = document.getElementById('image-lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const frame = document.getElementById('lightbox-frame');
+            
+            lightboxImg.src = src;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+            
+            // Apparition du fond
+            gsap.to(lightbox, { opacity: 1, duration: 0.3, ease: "power2.out" });
+            // Animation "pop" de la fenêtre brutaliste
+            gsap.fromTo(frame, 
+                { scale: 0.8, opacity: 0, y: 50, rotationZ: -2 }, 
+                { scale: 1, opacity: 1, y: 0, rotationZ: 0, duration: 0.6, ease: "back.out(1.4)" }
+            );
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('image-lightbox');
+            const frame = document.getElementById('lightbox-frame');
+            
+            gsap.to(frame, { scale: 0.9, opacity: 0, y: 20, rotationZ: 2, duration: 0.3, ease: "power2.in" });
+            gsap.to(lightbox, { opacity: 0, duration: 0.3, ease: "power2.in", onComplete: () => {
+                lightbox.classList.add('hidden');
+                lightbox.classList.remove('flex');
+            }});
+        }
+
+        function bindImagesToLightbox() {
+            const viewer = document.getElementById('readme-viewer');
+            const images = viewer.querySelectorAll('img');
+            images.forEach(img => {
+                img.classList.add('pointer-hover');
+                img.addEventListener('click', () => openLightbox(img.src));
+            });
+            updateCursorInteractions(); // Met à jour le custom cursor pour ces nouvelles images
+        }
+
+        // --- 4. GESTION GITHUB API ---
+        const USERNAME = 'legralltitouan';
+        const COLORS = ['bg-pastelBlue', 'bg-pastelPink', 'bg-pastelYellow', 'bg-pastelGreen'];
+
+        async function fetchAllPages(url, allRepos = []) {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Quota atteint ou erreur API'); 
+            
+            const repos = await response.json();
+            allRepos = allRepos.concat(repos);
+
+            const linkHeader = response.headers.get('Link');
+            if (linkHeader && linkHeader.includes('rel="next"')) {
+                const nextUrl = linkHeader.match(/<([^>]+)>;\s*rel="next"/)[1];
+                return fetchAllPages(nextUrl, allRepos);
+            }
+            return allRepos;
+        }
+
+        async function fetchAllRepos() {
+            try {
+                const initialUrl = `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=100`;
+                const allRepos = await fetchAllPages(initialUrl); 
+                
+                document.getElementById('repo-count').innerText = `${allRepos.length} PROJETS TROUVÉS`;
+                renderGrid(allRepos);
+            } catch (error) {
+                console.warn("GitHub API Error:", error);
+                document.getElementById('repo-count').innerText = `MODE HORS-LIGNE (BACKUP)`;
+                
+                const fallbackRepos = [
+                    { name: "Angora Shader", language: "GLSL", description: "Shader NPR avancé pour Blender & WebGL avec support du cross-hatching temps réel.", stargazers_count: 128, forks_count: 24, default_branch: "main", html_url: "https://github.com" },
+                    { name: "Creative-Engine", language: "JavaScript", description: "Framework de rendu minimaliste basé sur la composition matricielle.", stargazers_count: 56, forks_count: 12, default_branch: "main", html_url: "https://github.com" },
+                    { name: "Neo-Brutalism-UI", language: "HTML", description: "Design system expérimental basé sur des bordures épaisses et de l'asymétrie.", stargazers_count: 89, forks_count: 5, default_branch: "main", html_url: "https://github.com" },
+                    { name: "Python-Blender-Tools", language: "Python", description: "Scripts d'automatisation pour le pipeline de rendu Blender.", stargazers_count: 42, forks_count: 8, default_branch: "main", html_url: "https://github.com" }
+                ];
+                renderGrid(fallbackRepos);
+            }
+        }
+
+        function renderGrid(repos) {
+            const grid = document.getElementById('unified-grid');
+            grid.innerHTML = '';
+
+            repos.forEach((repo, index) => {
+                const colorClass = COLORS[index % COLORS.length];
+                const card = document.createElement('div');
+                card.className = "group h-full";
+                card.setAttribute('data-aos', 'fade-up');
+                card.setAttribute('data-aos-delay', (index % 3) * 100);
+
+                card.innerHTML = `
+                    <div class="project-card cursor-pointer" onmousemove="tilt(event, this)" onmouseleave="reset(this)" onclick="openProject('${repo.name}', '${repo.default_branch || 'main'}')">
+                        <div class="card-inner ${colorClass} p-8 flex flex-col justify-between shadow-[8px_8px_0px_0px_#111] group-hover:shadow-[16px_16px_0px_0px_#111] group-hover:-translate-y-2 transition-all duration-300">
+                            <div class="flex justify-between items-start mb-20 pointer-events-none">
+                                <span class="text-4xl font-black opacity-20 group-hover:opacity-60 transition-opacity">${(index + 1).toString().padStart(2, '0')}</span>
+                                <span class="mono-detail font-bold bg-white border-2 border-dark px-3 py-1 shadow-[2px_2px_0px_0px_#111]">${repo.language || 'DATA'}</span>
+                            </div>
+                            <div class="pointer-events-none">
+                                <h3 class="text-3xl font-black uppercase tracking-tighter leading-none mb-4 break-words">${repo.name}</h3>
+                                <p class="font-medium text-dark/80 line-clamp-3">${repo.description || 'Projet expérimental en cours de développement.'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            
+            setTimeout(() => { ScrollTrigger.refresh(); updateCursorInteractions(); }, 100);
+        }
+
+        function tilt(e, el) {
+            el.style.transition = "none";
+            const rect = el.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width - 0.5) * 15;
+            const y = ((e.clientY - rect.top) / rect.height - 0.5) * -15;
+            el.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale3d(1.02, 1.02, 1.02)`;
+        }
+
+        function reset(el) { 
+            el.style.transition = "transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)";
+            el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`; 
+        }
+
+        async function openProject(name, branch) {
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            
+            if(typeof lenis !== 'undefined') lenis.stop();
+            
+            gsap.fromTo(".modal-stagger-item", 
+                { y: 30, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out", delay: 0.3 }
+            );
+
+            // Fetch infos du repo
+            try {
+                const res = await fetch(`https://api.github.com/repos/${USERNAME}/${name}`);
+                if(!res.ok) throw new Error("Offline");
+                const repo = await res.json();
+
+                document.getElementById('modal-title').innerText = repo.name;
+                document.getElementById('modal-description').innerText = repo.description || '';
+                document.getElementById('modal-lang').innerText = repo.language || 'SOURCE';
+                document.getElementById('modal-stars').innerText = repo.stargazers_count;
+                document.getElementById('modal-forks').innerText = repo.forks_count;
+                document.getElementById('modal-github-link').href = repo.html_url;
+            } catch(e) {
+                document.getElementById('modal-title').innerText = name;
+                document.getElementById('modal-description').innerText = "Description générée en mode hors-ligne pour la simulation de l'API.";
+                document.getElementById('modal-stars').innerText = Math.floor(Math.random() * 100);
+                document.getElementById('modal-lang').innerText = 'HORS-LIGNE';
+            }
+
+            // Fetch README et Animation
+            const viewer = document.getElementById('readme-viewer');
+            viewer.innerHTML = '<div class="flex justify-center items-center h-64"><p class="mono-detail animate-pulse py-20 text-center text-xl">COMPILING DOCUMENTATION...</p></div>';
+
+            try {
+                const readmeRes = await fetch(`https://api.github.com/repos/${USERNAME}/${name}/readme`, {
+                    headers: { 'Accept': 'application/vnd.github.v3.raw' }
+                });
+                if(!readmeRes.ok) throw new Error("No Readme");
+                let text = await readmeRes.text();
+                const rawUrl = `https://raw.githubusercontent.com/${USERNAME}/${name}/${branch}/`;
+                text = text.replace(/!\[(.*?)\]\((?!http)(.*?)\)/g, `![$1](${rawUrl}$2)`);
+                text = text.replace(/<img([^>]+)src=["'](?!http)([^"']+)["']/g, `<img$1src="${rawUrl}$2"`);
+                
+                viewer.innerHTML = marked.parse(text);
+                setTimeout(bindImagesToLightbox, 100); // <-- Relie les images à la Lightbox une fois le DOM chargé
+            } catch (e) { 
+                const fallbackMarkdown = `
+# ${name}
+
+> **⚠️ API GITHUB HORS-LIGNE**
+> La documentation ci-dessous est générée dynamiquement car l'API de GitHub a atteint sa limite de requêtes.
+
+Bienvenue sur le dépôt expérimental de **${name}**. 
+
+## 📸 Aperçu (Clique sur l'image pour tester la Lightbox !)
+![Test Lightbox Neo-Brutaliste](https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop)
+
+## 💻 Installation & Usage
+Pour compiler le projet en local, lancez :
+
+\`\`\`bash
+git clone https://github.com/legralltitouan/${name.toLowerCase()}.git
+cd ${name.toLowerCase()}
+npm install
+npm run dev
+\`\`\`
+                `;
+                viewer.innerHTML = marked.parse(fallbackMarkdown);
+                setTimeout(bindImagesToLightbox, 100); // <-- Relie les images à la Lightbox pour le fallback aussi
+            }
+
+            // Animation GSAP du contenu
+            gsap.fromTo("#readme-viewer > *", 
+                { y: 30, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "power2.out", delay: 0.1 }
+            );
+        }
+
+        function closeProject() {
+            document.getElementById('project-modal').classList.remove('open');
+            document.body.style.overflow = 'auto';
+            
+            if(typeof lenis !== 'undefined') lenis.start();
+
+            gsap.set(".modal-stagger-item", { opacity: 0 });
+            gsap.set("#readme-viewer > *", { opacity: 0 });
+        }
+
+        fetchAllRepos();
+    </script>
+</body>
+</html>
