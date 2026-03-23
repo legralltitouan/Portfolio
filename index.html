@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITOUAN LEGRALL | CREATIVE PORTFOLIO</title>
+    <title>TITOUAN LEGRALL | PORTFOLIO</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -47,6 +47,14 @@
             a, button, .cursor-pointer, .pointer-hover { cursor: none !important; }
         }
 
+           /* Ajustements Markdown Mobile */
+        @media (max-width: 768px) {
+            .readme-content h1 { font-size: 1.8rem; }
+            .readme-content pre { padding: 1rem; }
+            .readme-content p, .readme-content ul { font-size: 1rem; }
+        } 
+
+
         /* Custom Scrollbar Brutaliste */
         ::-webkit-scrollbar { width: 14px; }
         ::-webkit-scrollbar-track { background: #F5F2E8; border-left: 2px solid #111; }
@@ -67,7 +75,7 @@
         .header-container { padding-top: 15vh; padding-bottom: 10vh; }
         .star-separator { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-size: 14px; font-weight: 900; }
         .char { display: inline-block; opacity: 0; transform: translateY(30px) rotateX(-20deg); }
-        .giant-text { font-size: clamp(3rem, 12vw, 15rem); line-height: 0.85; letter-spacing: -0.05em; font-weight: 900; text-transform: uppercase; }
+        .giant-text { font-size: clamp(3rem, 12vw, 12rem); line-height: 0.85; letter-spacing: -0.05em; font-weight: 900; text-transform: uppercase; }
         .mono-detail { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em; }
 
         /* Animations Continues */
@@ -178,12 +186,12 @@
     <header class="max-w-7xl mx-auto px-6 header-container">
         <div class="star-separator mono-detail">
             <div><span class="star-spin">✦</span> <span class="star-spin" style="animation-delay: 0.2s">✦</span> <span class="star-spin" style="animation-delay: 0.4s">✦</span></div>
-            <div class="hidden md:block opacity-40">PORTFOLIO V.3.0</div>
+            <div class="hidden md:block opacity-40">PORTFOLIO</div>
             <div><span class="star-spin" style="animation-delay: 0.4s">✦</span> <span class="star-spin" style="animation-delay: 0.2s">✦</span> <span class="star-spin">✦</span></div>
         </div>
     
         <h1 id="hero-title" class="giant-text mb-12 overflow-hidden" style="perspective: 1000px;">
-            CREATIVE<br>ENGINEER
+            DESIGNER<br>DEVELOPER
         </h1>
     
         <div class="grid grid-cols-1 md:grid-cols-12 gap-8 border-t-4 border-dark pt-8" data-aos="fade-up" data-aos-delay="500">
@@ -196,7 +204,7 @@
             <div class="md:col-span-5 flex justify-between items-end">
                 <div class="mono-detail text-right leading-tight opacity-60">
                     BASED IN FRANCE<br>
-                    NPR SPECIALIST<br>
+                    BLENDER SPECIALIST<br>
                     OPEN SOURCE DEV
                 </div>
                 <div class="flex items-center gap-6" id="color-dots">
@@ -228,7 +236,7 @@
 
     <section class="max-w-7xl mx-auto px-6 mb-32">
         <div class="flex justify-between items-end mb-12 border-b-2 border-dark pb-4">
-            <h2 class="text-4xl font-black uppercase tracking-tighter">Projets & Labs</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter">Projets</h2>
             <span class="mono-detail" id="repo-count">CHARGEMENT...</span>
         </div>
         
@@ -246,8 +254,8 @@
                     <div class="roadmap-dot absolute -left-[10px] top-6 w-4 h-4 rounded-full"></div>
                     <span class="mono-detail text-white/50 md:w-32 pt-1 font-bold">Q1 - 2026</span>
                     <div class="flex-grow">
-                        <h4 class="text-3xl font-black uppercase tracking-tight">Advanced Shader WebGL</h4>
-                        <p class="text-white/60 mt-3 text-lg">Expansion de Angora Shader avec des fonctionnalités de ray-tracing temps réel injectées directement dans le DOM pour le Web.</p>
+                        <h4 class="text-3xl font-black uppercase tracking-tight">Angora Shader V1</h4>
+                        <p class="text-white/60 mt-3 text-lg">Expansion des capacités visuelles avec l'intégration de templates de ciels procéduraux. Refonte des options de post-traitement (Compositing) et intégration d'un guide utilisateur dynamique pour fluidifier la création artistique.</p>
                     </div>
                 </div>
 
@@ -255,8 +263,8 @@
                     <div class="roadmap-dot absolute -left-[10px] top-6 w-4 h-4 rounded-full"></div>
                     <span class="mono-detail text-white/50 md:w-32 pt-1 font-bold">Q2 - 2026</span>
                     <div class="flex-grow">
-                        <h4 class="text-3xl font-black uppercase tracking-tight">Creative Engine V2</h4>
-                        <p class="text-white/60 mt-3 text-lg">Refonte totale de l'architecture. Implémentation du support WebGPU pour des performances de rendu multipliées par 10 sur des scènes complexes.</p>
+                        <h4 class="text-3xl font-black uppercase tracking-tight">PulsePlay V1</h4>
+                        <p class="text-white/60 mt-3 text-lg">Ajout d'un réglage de son directement dans l'application. L'interface se réduit automatiquement au démarrage et s'affiche entièrement dès qu'une musique est détectée.Correction des problèmes d'actualisation des informations de la musique (titre, artiste).Ajout d'options pour configurer le lancement et choisir la densité de l'interface (taille/espacement des éléments).</p>
                     </div>
                 </div>
 
@@ -290,7 +298,7 @@
             </h2>
             <p class="mono-detail text-xl mb-12 relative z-10 font-bold opacity-80">AVAILABLE FOR FREELANCE WORK</p>
             
-            <a href="mailto:tonemail@exemple.com" class="magnetic-btn inline-block border-4 border-dark bg-pastelYellow text-dark px-10 py-6 text-2xl lg:text-4xl font-black uppercase tracking-widest shadow-[8px_8px_0px_0px_#111] hover:bg-dark hover:text-white transition-colors duration-300 relative z-10 pointer-hover">
+            <a href="mailto:titouan.legrall@gmail.com" class="magnetic-btn inline-block border-4 border-dark bg-pastelYellow text-dark px-10 py-6 text-2xl lg:text-4xl font-black uppercase tracking-widest shadow-[8px_8px_0px_0px_#111] hover:bg-dark hover:text-white transition-colors duration-300 relative z-10 pointer-hover">
                 ENVOYER UN EMAIL ↗
             </a>
         </div>
@@ -305,25 +313,38 @@
         </div>
     </footer>
 
-    <div id="project-modal" class="fixed inset-0 z-[200] bg-bg flex flex-col lg:flex-row overflow-hidden">
-        <div class="lg:w-2/5 bg-dark text-white p-12 flex flex-col justify-between relative shadow-2xl z-10">
-            <button onclick="closeProject()" class="absolute top-8 left-8 btn-close-modal text-dark px-4 py-2 flex items-center gap-3 pointer-hover z-50">
-                <i class="fas fa-times text-xl"></i>
-                <span class="mono-detail font-black pt-1">FERMER</span>
+    <div id="project-modal" class="fixed inset-0 z-[200] bg-bg flex flex-col lg:flex-row overflow-hidden h-[100dvh]">
+        <div class="lg:w-2/5 bg-dark text-white p-6 lg:p-12 flex flex-col justify-center lg:justify-between relative shadow-2xl z-20 shrink-0 border-b-4 border-dark lg:border-b-0 lg:border-r-4">
+            
+            <button onclick="closeProject()" class="absolute top-4 right-4 lg:top-8 lg:left-8 btn-close-modal text-dark px-3 py-2 lg:px-4 lg:py-2 flex items-center gap-2 pointer-hover z-50 w-max">
+                <i class="fas fa-times text-lg lg:text-xl"></i>
+                <span class="mono-detail font-black pt-1 hidden lg:inline">FERMER</span>
             </button>
-            <div class="mt-20">
-                <div id="modal-lang" class="modal-stagger-item mono-detail border border-white/30 inline-block px-3 py-1 mb-6"></div>
-                <h2 id="modal-title" class="modal-stagger-item text-6xl font-black uppercase tracking-tighter leading-none mb-6"></h2>
-                <p id="modal-description" class="modal-stagger-item text-xl text-white/70 mb-12"></p>
-                <div class="modal-stagger-item flex gap-8 mb-12">
-                    <div><span id="modal-stars" class="text-4xl font-black block">0</span><span class="mono-detail opacity-40">Stars</span></div>
-                    <div><span id="modal-forks" class="text-4xl font-black block">0</span><span class="mono-detail opacity-40">Forks</span></div>
+            
+            <div class="mt-12 lg:mt-20">
+                <div id="modal-lang" class="modal-stagger-item mono-detail border border-white/30 inline-block px-2 py-1 mb-4 lg:mb-6 text-xs lg:text-sm"></div>
+                
+                <h2 id="modal-title" class="modal-stagger-item text-4xl lg:text-6xl font-black uppercase tracking-tighter leading-none mb-4 lg:mb-6 break-words"></h2>
+                
+                <p id="modal-description" class="modal-stagger-item text-sm lg:text-xl text-white/70 mb-6 lg:mb-12 line-clamp-3 lg:line-clamp-none"></p>
+                
+                <div class="modal-stagger-item flex gap-6 lg:gap-8 mb-6 lg:mb-12">
+                    <div>
+                        <span id="modal-stars" class="text-3xl lg:text-4xl font-black block">0</span>
+                        <span class="mono-detail opacity-40 text-xs lg:text-base">Stars</span>
+                    </div>
+                    <div>
+                        <span id="modal-forks" class="text-3xl lg:text-4xl font-black block">0</span>
+                        <span class="mono-detail opacity-40 text-xs lg:text-base">Forks</span>
+                    </div>
                 </div>
-                <a id="modal-github-link" target="_blank" class="modal-stagger-item block w-full py-5 bg-white text-dark text-center font-black uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-colors duration-300 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] hover:translate-y-1 hover:shadow-none transition-all pointer-hover">VOIR LE CODE ↗</a>
+                
+                <a id="modal-github-link" target="_blank" class="modal-stagger-item block w-full py-4 lg:py-5 bg-white text-dark text-center font-black uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-colors duration-300 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] lg:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] hover:translate-y-1 hover:shadow-none transition-all pointer-hover text-sm lg:text-base">VOIR LE CODE ↗</a>
             </div>
         </div>
-        <div id="modal-wrapper" class="lg:w-3/5 h-full overflow-y-auto relative bg-[#F5F2E8]">
-            <div id="modal-content" class="p-8 lg:p-12 lg:py-20 min-h-full">
+
+        <div id="modal-wrapper" class="flex-1 lg:w-3/5 h-full overflow-y-auto relative bg-[#F5F2E8] z-10">
+            <div id="modal-content" class="p-6 lg:p-12 lg:py-20 min-h-full">
                 <div id="readme-viewer" class="readme-content w-full max-w-5xl mx-auto text-dark"></div>
             </div>
         </div>
@@ -439,44 +460,64 @@
         });
 
         // --- 2. INITIALISATION GSAP & SCROLLTRIGGER ---
+        // --- 2. INITIALISATION GSAP & SCROLLTRIGGER ---
         gsap.registerPlugin(ScrollTrigger);
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Animation du Titre
+            // 1. Animation du Titre (Universelle)
             const title = document.getElementById('hero-title');
-            const text = title.innerHTML.trim();
-            let newHTML = "";
-            const lines = text.split('<br>');
-            
-            lines.forEach((line, index) => {
-                const words = line.split('');
-                words.forEach(char => {
-                    if(char === " ") newHTML += `<span>&nbsp;</span>`;
-                    else newHTML += `<span class="char variable-font">${char}</span>`;
+            if (title) {
+                const text = title.innerHTML.trim();
+                let newHTML = "";
+                const lines = text.split('<br>');
+                
+                lines.forEach((line, index) => {
+                    const words = line.split('');
+                    words.forEach(char => {
+                        if(char === " ") newHTML += `<span>&nbsp;</span>`;
+                        else newHTML += `<span class="char variable-font">${char}</span>`;
+                    });
+                    if(index < lines.length - 1) newHTML += "<br>";
                 });
-                if(index < lines.length - 1) newHTML += "<br>";
-            });
-            title.innerHTML = newHTML;
+                title.innerHTML = newHTML;
 
-            document.fonts.ready.then(() => {
-                const tl = gsap.timeline();
-                tl.to(".char", { opacity: 1, y: 0, rotationX: 0, duration: 0.8, stagger: 0.03, ease: "back.out(1.7)" });
-                tl.to(".char", { fontVariationSettings: "'wght' 900", duration: 1.2, stagger: 0.03, ease: "power2.inOut" }, "-=0.6");
-            });
+                document.fonts.ready.then(() => {
+                    const tl = gsap.timeline();
+                    tl.to(".char", { opacity: 1, y: 0, rotationX: 0, duration: 0.8, stagger: 0.03, ease: "back.out(1.7)" });
+                    tl.to(".char", { fontVariationSettings: "'wght' 900", duration: 1.2, stagger: 0.03, ease: "power2.inOut" }, "-=0.6");
+                });
+            }
 
-            // Animation du Roadmap au scroll
+            // 2. Initialisation AOS (Globale)
+            AOS.init({ duration: 800, once: true });
+
+            // 3. LOGIQUE ROADMAP UNIQUEMENT (Différenciée PC / Mobile)
+            let mm = gsap.matchMedia();
             const roadmapItems = gsap.utils.toArray('.roadmap-item');
-            roadmapItems.forEach((item, i) => {
-                ScrollTrigger.create({
-                    trigger: item,
-                    start: "top 75%", 
-                    end: "bottom 25%",
-                    toggleClass: "is-active",
+
+            mm.add({
+                isDesktop: "(min-width: 1025px)",
+                isMobile: "(max-width: 1024px)"
+            }, (context) => {
+                let { isDesktop, isMobile } = context.conditions;
+
+                if (isMobile) {
+                    // Config spécifique au scroll Mobile
+                    ScrollTrigger.config({ ignoreMobileResize: true });
+                }
+
+                roadmapItems.forEach((item) => {
+                    ScrollTrigger.create({
+                        trigger: item,
+                        // Si PC : Start 40% (Haut) | Si Mobile : Start 85% (Bas)
+                        start: isDesktop ? "top 40%" : "top 85%", 
+                        // Si PC : End 5% | Si Mobile : End 15%
+                        end: isDesktop ? "bottom 5%" : "bottom 15%",
+                        toggleClass: "is-active",
+                    });
                 });
             });
         });
-
-        AOS.init({ duration: 800, once: true });
 
         // --- ANIMATION DES PASTILLES DE COULEUR ---
         const pills = document.querySelectorAll('.color-pill');
