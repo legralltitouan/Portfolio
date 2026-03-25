@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITOUAN LEGRALL | PORTFOLIO</title>
+    <title>TITOUAN LEGRALL | CREATIVE PORTFOLIO</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,7 +13,6 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     
     <script>
@@ -21,8 +20,20 @@
             theme: {
                 extend: {
                     colors: {
-                        bg: '#F5F2E8', dark: '#111',
-                        pastelBlue: '#DCDDFF', pastelPink: '#FBD2F5', pastelYellow: '#FFDE9F', pastelGreen: '#D5F2E3'
+                        theme: {
+                            bg: 'var(--c-bg)',
+                            text: 'var(--c-text)',
+                            border: 'var(--c-border)',
+                            surface: 'var(--c-surface)',
+                            darkSurface: 'var(--c-dark-surface)',
+                            acc1: 'var(--c-acc-1)',
+                            acc2: 'var(--c-acc-2)',
+                            acc3: 'var(--c-acc-3)',
+                            acc4: 'var(--c-acc-4)',
+                            shadow: 'var(--c-shadow)',
+                            marquee: 'var(--c-marquee)',
+                            marqueeText: 'var(--c-marquee-text)'
+                        }
                     },
                     fontFamily: {
                         sans: ['Inter', 'Helvetica', 'sans-serif'],
@@ -34,6 +45,45 @@
     </script>
 
     <style>
+        /* CSS Variables pour le basculement dynamique Light/Dark */
+        :root {
+            --c-bg: #F5F2E8;
+            --c-text: #111111;
+            --c-border: #111111;
+            --c-surface: #FFFFFF;
+            --c-dark-surface: #111111;
+            
+            --c-acc-1: #DCDDFF; /* pastelBlue */
+            --c-acc-2: #FBD2F5; /* pastelPink */
+            --c-acc-3: #FFDE9F; /* pastelYellow */
+            --c-acc-4: #D5F2E3; /* pastelGreen */
+            
+            --c-shadow: #111111;
+            --c-marquee: #FFDE9F;
+            --c-marquee-text: #111111;
+            
+            --noise-opacity: 0.04;
+        }
+
+        html.dark-mode {
+            --c-bg: #050505;
+            --c-text: #F3F4F6;
+            --c-border: #FFFFFF;
+            --c-surface: #111111; 
+            --c-dark-surface: #111111;
+            
+            --c-acc-1: #FFFFFF; 
+            --c-acc-2: #D1D5DB; 
+            --c-acc-3: #9CA3AF; 
+            --c-acc-4: #4B5563; 
+            
+            --c-shadow: #4B5563;
+            --c-marquee: #FFFFFF;
+            --c-marquee-text: #050505;
+            
+            --noise-opacity: 0.01;
+        }
+
         /* Styles Lenis obligatoires */
         html.lenis, html.lenis body { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto !important; }
@@ -41,36 +91,32 @@
         .lenis.lenis-stopped { overflow: hidden; }
         .lenis.lenis-scrolling iframe { pointer-events: none; }
 
-        /* Désactiver le curseur par défaut sur les écrans non-tactiles */
         @media (pointer: fine) {
             body { cursor: none; }
             a, button, .cursor-pointer, .pointer-hover { cursor: none !important; }
         }
 
-           /* Ajustements Markdown Mobile */
         @media (max-width: 768px) {
             .readme-content h1 { font-size: 1.8rem; }
             .readme-content pre { padding: 1rem; }
             .readme-content p, .readme-content ul { font-size: 1rem; }
         } 
 
-
         /* Custom Scrollbar Brutaliste */
         ::-webkit-scrollbar { width: 14px; }
-        ::-webkit-scrollbar-track { background: #F5F2E8; border-left: 2px solid #111; }
-        ::-webkit-scrollbar-thumb { background: #111; border: 2px solid #F5F2E8; }
-        ::-webkit-scrollbar-thumb:hover { background: #333; }
+        ::-webkit-scrollbar-track { background: var(--c-bg); border-left: 2px solid var(--c-border); }
+        ::-webkit-scrollbar-thumb { background: var(--c-border); border: 2px solid var(--c-bg); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--c-acc-3); }
 
-        /* Bruit visuel (Noise) pour l'effet matière brutaliste */
+        /* Bruit visuel */
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 9998; opacity: 0.04; mix-blend-mode: multiply;
+            pointer-events: none; z-index: 9998; opacity: var(--noise-opacity); mix-blend-mode: multiply;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        body { background-color: #F5F2E8; color: #111; overflow-x: hidden; }
+        body { background-color: var(--c-bg); color: var(--c-text); overflow-x: hidden; transition: background-color 0s; }
 
-        /* Police Variable */
         .variable-font { font-family: 'Inter', sans-serif; font-variation-settings: "wght" 100; display: inline-block; white-space: pre; }
         .header-container { padding-top: 15vh; padding-bottom: 10vh; }
         .star-separator { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-size: 14px; font-weight: 900; }
@@ -78,11 +124,10 @@
         .giant-text { font-size: clamp(3rem, 12vw, 12rem); line-height: 0.85; letter-spacing: -0.05em; font-weight: 900; text-transform: uppercase; }
         .mono-detail { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em; }
 
-        /* Animations Continues */
         .star-spin { display: inline-block; animation: starPulse 3s ease-in-out infinite; }
         @keyframes starPulse {
             0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.3) rotate(180deg); color: #4b5563; }
+            50% { transform: scale(1.3) rotate(180deg); color: var(--c-shadow); }
             100% { transform: scale(1) rotate(360deg); }
         }
         
@@ -94,13 +139,20 @@
         }
 
         /* Marquee */
-        .marquee-container { border-top: 2px solid #111; border-bottom: 2px solid #111; overflow: hidden; white-space: nowrap; background: #FFDE9F; padding: 12px 0; }
+        .marquee-container { border-top: 2px solid var(--c-border); border-bottom: 2px solid var(--c-border); overflow: hidden; white-space: nowrap; background: var(--c-marquee); color: var(--c-marquee-text); padding: 12px 0; }
         .marquee-content { display: inline-block; animation: marquee 20s linear infinite; font-family: 'JetBrains Mono', monospace; font-weight: 900; font-size: 1.2rem; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Card 3D Style */
+        /* Card 3D Style Variables */
         .project-card { transform-style: preserve-3d; transform: perspective(1000px); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); height: 100%; }
-        .card-inner { transform: translateZ(30px); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); height: 100%; border: 2px solid #111; }
+        
+        .dynamic-card { background-color: var(--card-acc); box-shadow: 8px 8px 0px 0px var(--c-border); color: var(--c-text); border: 2px solid var(--c-border); transform: translateZ(30px); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); height: 100%; }
+        .group:hover .dynamic-card { box-shadow: 16px 16px 0px 0px var(--c-border); transform: translateZ(30px) translateY(-8px); }
+        .card-number-txt { color: var(--c-border); }
+        
+        html.dark-mode .dynamic-card { background-color: var(--c-dark-surface); box-shadow: 8px 8px 0px 0px var(--card-acc); }
+        html.dark-mode .group:hover .dynamic-card { box-shadow: 16px 16px 0px 0px var(--card-acc); }
+        html.dark-mode .card-number-txt { color: var(--card-acc); }
 
         /* Modal Clip-path */
         #project-modal { clip-path: circle(0% at 50% 50%); transition: clip-path 0.8s cubic-bezier(0.85, 0, 0.15, 1); }
@@ -112,56 +164,54 @@
         .roadmap-item .roadmap-dot { transition: all 0.5s ease; background-color: rgba(255,255,255,0.2); transform: scale(1); }
         
         .roadmap-item.is-active { opacity: 1; border-color: rgba(255,255,255,1); transform: translateX(10px); }
-        .roadmap-item.is-active .roadmap-dot { background-color: #FFDE9F; transform: scale(1.5); box-shadow: 0 0 15px rgba(255, 222, 159, 0.5); }
+        .roadmap-item.is-active .roadmap-dot { background-color: var(--c-acc-3); transform: scale(1.5); box-shadow: 0 0 15px var(--c-acc-3); }
 
-        /* Bouton de fermeture modale Néo-Brutaliste */
+        /* Bouton Néo-Brutaliste */
         .btn-close-modal {
-            border: 3px solid #111;
-            background: #FFDE9F;
-            box-shadow: 4px 4px 0px 0px #111;
+            border: 3px solid var(--c-border);
+            background: var(--c-acc-3);
+            box-shadow: 4px 4px 0px 0px var(--c-shadow);
             transition: all 0.2s ease-out;
-            font-weight: 900;
+            font-weight: 900; color: var(--c-marquee-text);
         }
-        .btn-close-modal:hover {
-            box-shadow: 0px 0px 0px 0px #111;
-            transform: translate(4px, 4px);
-            background: #FBD2F5;
-        }
+        .btn-close-modal:hover { box-shadow: 0px 0px 0px 0px var(--c-shadow); transform: translate(4px, 4px); background: var(--c-acc-2); }
 
-        /* Styles Markdown (README) Améliorés */
-        .readme-content { opacity: 1; }
-        .readme-content h1, .readme-content h2, .readme-content h3 { font-weight: 900; text-transform: uppercase; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #111; padding-bottom: 0.5rem; }
+        /* Styles Markdown (README) Adaptés au Theme */
+        .readme-content { opacity: 1; color: var(--c-text); }
+        .readme-content h1, .readme-content h2, .readme-content h3 { font-weight: 900; text-transform: uppercase; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid var(--c-border); padding-bottom: 0.5rem; color: var(--c-text);}
         .readme-content h1 { font-size: 2.5rem; letter-spacing: -0.05em; }
         .readme-content p { margin-bottom: 1.5rem; line-height: 1.6; font-size: 1.125rem; }
-        .readme-content pre { background: #111; color: #DCDDFF; padding: 1.5rem; border-radius: 0px; overflow-x: auto; margin: 2rem 0; border: 3px solid #111; box-shadow: 6px 6px 0px 0px #111;}
-        .readme-content code { background: #FFDE9F; color: #111; padding: 0.2rem 0.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; font-weight: bold; border: 2px solid #111;}
+        .readme-content pre { background: var(--c-dark-surface); color: var(--c-acc-1); padding: 1.5rem; overflow-x: auto; margin: 2rem 0; border: 3px solid var(--c-border); box-shadow: 6px 6px 0px 0px var(--c-shadow);}
+        .readme-content code { background: var(--c-acc-3); color: var(--c-marquee-text); padding: 0.2rem 0.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; font-weight: bold; border: 2px solid var(--c-border);}
         .readme-content pre code { background: transparent; color: inherit; border: none; padding: 0; font-weight: normal;}
-        .readme-content blockquote { border-left: 6px solid #111; background: #DCDDFF; padding: 1rem 1.5rem; margin: 1.5rem 0; font-style: italic; font-weight: 700; border-right: 2px solid #111; border-top: 2px solid #111; border-bottom: 2px solid #111;}
+        .readme-content blockquote { border-left: 6px solid var(--c-border); background: var(--c-acc-1); color: var(--c-marquee-text); padding: 1rem 1.5rem; margin: 1.5rem 0; font-style: italic; font-weight: 700; border-right: 2px solid var(--c-border); border-top: 2px solid var(--c-border); border-bottom: 2px solid var(--c-border);}
         .readme-content ul { list-style-type: square; padding-left: 2rem; margin-bottom: 1.5rem; font-size: 1.125rem;}
         .readme-content li { margin-bottom: 0.5rem; }
-        .readme-content a { color: #111; text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: #2563eb; font-weight: 900; transition: all 0.2s;}
-        .readme-content a:hover { background: #2563eb; color: #fff; }
-        .readme-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; border: 3px solid #111; background: white;}
-        .readme-content th, .readme-content td { border: 2px solid #111; padding: 1rem; text-align: left; }
-        .readme-content th { background: #D5F2E3; font-weight: 900; text-transform: uppercase; }
+        .readme-content a { color: var(--c-text); text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--c-acc-3); font-weight: 900; transition: all 0.2s;}
+        .readme-content a:hover { background: var(--c-acc-3); color: var(--c-marquee-text); text-decoration-color: var(--c-marquee-text);}
+        .readme-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; border: 3px solid var(--c-border); background: var(--c-surface);}
+        .readme-content th, .readme-content td { border: 2px solid var(--c-border); padding: 1rem; text-align: left; }
+        .readme-content th { background: var(--c-acc-4); color: var(--c-marquee-text); font-weight: 900; text-transform: uppercase; }
 
-        /* NOUVEAU: Styles pour les images du Markdown (interactives) */
         .readme-content img { 
             max-width: 100%; height: auto; max-height: 50vh; object-fit: contain; 
-            border: 3px solid #111; margin: 2rem auto; display: block; 
-            box-shadow: 8px 8px 0px 0px rgba(17,17,17,1); background: white;
+            border: 3px solid var(--c-border); margin: 2rem auto; display: block; 
+            box-shadow: 8px 8px 0px 0px var(--c-shadow); background: var(--c-surface);
             transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
         }
-        .readme-content img:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px 0px rgba(17,17,17,1);
-        }
+        .readme-content img:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px 0px var(--c-border); }
 
+        /* Pastilles */
         .pill-container { height: 56px; display: flex; align-items: center; }
-        .color-pill { width: 56px; height: 56px; border: 3px solid #111; border-radius: 999px; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; transition: box-shadow 0.3s ease; box-shadow: 6px 6px 0px 0px #111; white-space: nowrap; }
-        .color-pill:hover { box-shadow: 0px 0px 0px 0px #111; }
+        .color-pill { width: 56px; height: 56px; border: 3px solid var(--c-border); border-radius: 999px; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; transition: box-shadow 0.3s ease; box-shadow: 6px 6px 0px 0px var(--c-shadow); white-space: nowrap; color: var(--c-marquee-text);}
+        .color-pill:hover { box-shadow: 0px 0px 0px 0px var(--c-border); }
         .hex-value { font-family: 'JetBrains Mono', monospace; font-weight: 900; font-size: 14px; text-transform: uppercase; opacity: 0; transform: translateX(-10px); pointer-events: none; padding: 0 20px; }
+
+/* Animation subtile pour l'indication de clic */
+.group:hover .absolute {
+    transform: translate(-50%, -5px); /* Monte légèrement au survol */
+}
     </style>
 </head>
 <body class="antialiased">
@@ -179,14 +229,14 @@
     </div>
 
     <nav class="fixed top-0 w-full z-40 px-6 py-8 flex justify-between items-center mix-blend-difference text-white pointer-events-none" data-aos="fade-down" data-aos-duration="1000">
-        <div class="font-black text-2xl tracking-tighter pointer-events-auto cursor-pointer" id="logo-hover">TL<span class="text-blue-500">.</span></div>
+        <div class="font-black text-2xl tracking-tighter pointer-events-auto cursor-pointer" id="logo-hover">TL<span class="text-white">.</span></div>
         <div class="mono-detail pointer-events-auto border-b-2 border-white pb-1">TITOUAN LEGRALL // 2026</div>
     </nav>
 
     <header class="max-w-7xl mx-auto px-6 header-container">
-        <div class="star-separator mono-detail">
+        <div class="star-separator mono-detail opacity-60">
             <div><span class="star-spin">✦</span> <span class="star-spin" style="animation-delay: 0.2s">✦</span> <span class="star-spin" style="animation-delay: 0.4s">✦</span></div>
-            <div class="hidden md:block opacity-40">PORTFOLIO</div>
+            <div class="hidden md:block">PORTFOLIO</div>
             <div><span class="star-spin" style="animation-delay: 0.4s">✦</span> <span class="star-spin" style="animation-delay: 0.2s">✦</span> <span class="star-spin">✦</span></div>
         </div>
     
@@ -194,11 +244,11 @@
             DESIGNER<br>DEVELOPER
         </h1>
     
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 border-t-4 border-dark pt-8" data-aos="fade-up" data-aos-delay="500">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 border-t-4 border-theme-border pt-8" data-aos="fade-up" data-aos-delay="500">
             <div class="md:col-span-7">
                 <p class="text-3xl font-bold tracking-tight leading-none uppercase">
                     Artiste 3D & Développeur.<br> 
-                    <span class="text-dark/40">Logiciel, Rendu & Design.</span>
+                    <span class="opacity-50">Logiciel, Rendu & Design.</span>
                 </p>
             </div>
             <div class="md:col-span-5 flex justify-between items-end">
@@ -209,33 +259,38 @@
                 </div>
                 <div class="flex items-center gap-6" id="color-dots">
                     <div class="pill-container floating" style="animation-delay: 0s;">
-                        <div class="color-pill group bg-pastelBlue" data-hex="#DCDDFF">
-                            <span class="hex-value">#DCDDFF</span>
+                        <div class="color-pill group" style="background-color: var(--c-acc-1);" data-hex="#DCDDFF">
+                            <span class="hex-value" id="pill-1-text">#DCDDFF</span>
                         </div>
                     </div>
                     <div class="pill-container floating" style="animation-delay: 0.2s;">
-                        <div class="color-pill group bg-pastelPink" data-hex="#FBD2F5">
-                            <span class="hex-value">#FBD2F5</span>
+                        <div class="color-pill group" style="background-color: var(--c-acc-2);" data-hex="#FBD2F5">
+                            <span class="hex-value" id="pill-2-text">#FBD2F5</span>
                         </div>
                     </div>
                     <div class="pill-container floating" style="animation-delay: 0.4s;">
-                        <div class="color-pill group bg-pastelYellow" data-hex="#FFDE9F">
-                            <span class="hex-value">#FFDE9F</span>
+                        <div class="color-pill group" style="background-color: var(--c-acc-3);" data-hex="#FFDE9F">
+                            <span class="hex-value" id="pill-3-text">#FFDE9F</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-
-    <div class="marquee-container mb-24 cursor-pointer hover:bg-pastelPink transition-colors duration-500" data-aos="fade-in" data-aos-delay="700">
+<div class="relative group cursor-pointer mb-24" onclick="switchTheme(event)">
+    <div class="absolute -top-6 left-1/2 -translate-x-1/2 mono-detail text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none text-theme-text font-bold">
+        [ CLIQUEZ POUR INVERSER LE THÈME ]
+    </div>
+    
+    <div class="marquee-container hover:bg-theme-acc2 hover:text-theme-text transition-colors duration-500" data-aos="fade-in" data-aos-delay="700">
         <div class="marquee-content">
-            GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ BRUTALISM ✦ GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ BRUTALISM ✦ GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ BRUTALISM ✦ GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ BRUTALISM ✦ GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ BRUTALISM ✦ GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ BRUTALISM ✦
+            GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ SWITCH THEME ✦ GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ SWITCH THEME ✦ GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ SWITCH THEME ✦ GITHUB REPOSITORIES ✦ 3D ART ✦ OPEN SOURCE ✦ WEB DESIGN ✦ SWITCH THEME ✦
         </div>
     </div>
+</div>
 
     <section class="max-w-7xl mx-auto px-6 mb-32">
-        <div class="flex justify-between items-end mb-12 border-b-2 border-dark pb-4">
+        <div class="flex justify-between items-end mb-12 border-b-2 border-theme-border pb-4">
             <h2 class="text-4xl font-black uppercase tracking-tighter">Projets</h2>
             <span class="mono-detail" id="repo-count">CHARGEMENT...</span>
         </div>
@@ -244,8 +299,8 @@
     </section>
 
     <section class="max-w-7xl mx-auto px-6 mb-32 relative">
-        <div class="bg-dark text-white p-12 lg:p-20 shadow-[20px_20px_0px_0px_#DCDDFF] relative overflow-hidden group">
-            <div class="absolute -right-20 -top-20 w-64 h-64 bg-pastelBlue rounded-full mix-blend-overlay opacity-10 group-hover:scale-[2] transition-transform duration-1000 ease-out"></div>
+        <div class="bg-theme-darkSurface text-white p-12 lg:p-20 shadow-[20px_20px_0px_0px_var(--c-acc-1)] relative overflow-hidden group">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-white rounded-full mix-blend-overlay opacity-10 group-hover:scale-[2] transition-transform duration-1000 ease-out"></div>
             
             <h2 class="text-5xl lg:text-7xl font-black uppercase mb-20 tracking-tighter relative z-10" data-aos="fade-right">Roadmap 2026</h2>
             
@@ -255,7 +310,7 @@
                     <span class="mono-detail text-white/50 md:w-32 pt-1 font-bold">Q1 - 2026</span>
                     <div class="flex-grow">
                         <h4 class="text-3xl font-black uppercase tracking-tight">Angora Shader V1</h4>
-                        <p class="text-white/60 mt-3 text-lg">Expansion des capacités visuelles avec l'intégration de templates de ciels procéduraux. Refonte des options de post-traitement (Compositing) et intégration d'un guide utilisateur dynamique pour fluidifier la création artistique.</p>
+                        <p class="text-white/60 mt-3 text-lg">Expansion des capacités visuelles avec l'intégration de templates de ciels procéduraux. Refonte des options de post-traitement (Compositing) et intégration d'un guide utilisateur dynamique.</p>
                     </div>
                 </div>
 
@@ -264,7 +319,7 @@
                     <span class="mono-detail text-white/50 md:w-32 pt-1 font-bold">Q2 - 2026</span>
                     <div class="flex-grow">
                         <h4 class="text-3xl font-black uppercase tracking-tight">PulsePlay V1</h4>
-                        <p class="text-white/60 mt-3 text-lg">Ajout d'un réglage de son directement dans l'application. L'interface se réduit automatiquement au démarrage et s'affiche entièrement dès qu'une musique est détectée.Correction des problèmes d'actualisation des informations de la musique (titre, artiste).Ajout d'options pour configurer le lancement et choisir la densité de l'interface (taille/espacement des éléments).</p>
+                        <p class="text-white/60 mt-3 text-lg">Ajout d'un réglage de son directement dans l'application. L'interface se réduit automatiquement au démarrage et s'affiche entièrement dès qu'une musique est détectée. Correction des problèmes d'actualisation des informations de la musique. Ajout d'options pour configurer le lancement.</p>
                     </div>
                 </div>
 
@@ -290,33 +345,33 @@
     </section>
 
     <section class="max-w-7xl mx-auto px-6 mb-32 relative" data-aos="zoom-in" data-aos-duration="800">
-        <div class="border-4 border-dark bg-pastelGreen p-12 lg:p-24 text-center relative overflow-hidden group shadow-[15px_15px_0px_0px_#111]">
-            <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-white rounded-full mix-blend-overlay opacity-30 group-hover:scale-150 transition-transform duration-1000 ease-out animate-[spin_10s_linear_infinite] border-8 border-dashed border-dark"></div>
+        <div class="border-4 border-theme-border bg-theme-acc4 p-12 lg:p-24 text-center relative overflow-hidden group shadow-[15px_15px_0px_0px_var(--c-shadow)]">
+            <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-white rounded-full mix-blend-overlay opacity-30 group-hover:scale-150 transition-transform duration-1000 ease-out animate-[spin_10s_linear_infinite] border-8 border-dashed border-theme-border"></div>
             
-            <h2 class="text-6xl lg:text-8xl font-black uppercase tracking-tighter mb-4 relative z-10 text-dark">
+            <h2 class="text-6xl lg:text-8xl font-black uppercase tracking-tighter mb-4 relative z-10 text-theme-text">
                 Let's Talk.
             </h2>
-            <p class="mono-detail text-xl mb-12 relative z-10 font-bold opacity-80">AVAILABLE FOR FREELANCE WORK</p>
+            <p class="mono-detail text-xl mb-12 relative z-10 font-bold opacity-80 text-theme-text">AVAILABLE FOR FREELANCE WORK</p>
             
-            <a href="mailto:titouan.legrall@gmail.com" class="magnetic-btn inline-block border-4 border-dark bg-pastelYellow text-dark px-10 py-6 text-2xl lg:text-4xl font-black uppercase tracking-widest shadow-[8px_8px_0px_0px_#111] hover:bg-dark hover:text-white transition-colors duration-300 relative z-10 pointer-hover">
+            <a href="mailto:titouan.legrall@gmail.com" class="magnetic-btn inline-block border-4 border-theme-border bg-theme-acc3 text-theme-marqueeText px-10 py-6 text-2xl lg:text-4xl font-black uppercase tracking-widest shadow-[8px_8px_0px_0px_var(--c-shadow)] hover:bg-theme-bg hover:text-theme-text transition-colors duration-300 relative z-10 pointer-hover">
                 ENVOYER UN EMAIL ↗
             </a>
         </div>
     </section>
 
-    <footer class="p-12 border-t-2 border-dark flex flex-col md:flex-row justify-between items-center gap-8 bg-white relative z-10">
+    <footer class="p-12 border-t-2 border-theme-border flex flex-col md:flex-row justify-between items-center gap-8 bg-theme-surface relative z-10">
         <div class="mono-detail">© 2026 TITOUAN LEGRALL</div>
         <div class="flex gap-8 mono-detail font-bold">
-            <a href="#" class="hover:underline hover:text-blue-600 transition-colors pointer-hover">TWITTER</a>
-            <a href="#" class="hover:underline hover:text-blue-600 transition-colors pointer-hover">LINKEDIN</a>
-            <a href="https://github.com/legralltitouan" class="hover:underline hover:text-blue-600 transition-colors pointer-hover">GITHUB</a>
+            <a href="#" class="hover:underline hover:text-theme-acc3 transition-colors pointer-hover">TWITTER</a>
+            <a href="#" class="hover:underline hover:text-theme-acc3 transition-colors pointer-hover">LINKEDIN</a>
+            <a href="https://github.com/legralltitouan" class="hover:underline hover:text-theme-acc3 transition-colors pointer-hover">GITHUB</a>
         </div>
     </footer>
 
-    <div id="project-modal" class="fixed inset-0 z-[200] bg-bg flex flex-col lg:flex-row overflow-hidden h-[100dvh]">
-        <div class="lg:w-2/5 bg-dark text-white p-6 lg:p-12 flex flex-col justify-center lg:justify-between relative shadow-2xl z-20 shrink-0 border-b-4 border-dark lg:border-b-0 lg:border-r-4">
+    <div id="project-modal" class="fixed inset-0 z-[200] bg-theme-bg flex flex-col lg:flex-row overflow-hidden h-[100dvh]">
+        <div class="lg:w-2/5 bg-theme-darkSurface text-white p-6 lg:p-12 flex flex-col justify-center lg:justify-between relative shadow-2xl z-20 shrink-0 border-b-4 border-theme-border lg:border-b-0 lg:border-r-4">
             
-            <button onclick="closeProject()" class="absolute top-4 right-4 lg:top-8 lg:left-8 btn-close-modal text-dark px-3 py-2 lg:px-4 lg:py-2 flex items-center gap-2 pointer-hover z-50 w-max">
+            <button onclick="closeProject()" class="absolute top-4 right-4 lg:top-8 lg:left-8 btn-close-modal px-3 py-2 lg:px-4 lg:py-2 flex items-center gap-2 pointer-hover z-50 w-max">
                 <i class="fas fa-times text-lg lg:text-xl"></i>
                 <span class="mono-detail font-black pt-1 hidden lg:inline">FERMER</span>
             </button>
@@ -339,62 +394,115 @@
                     </div>
                 </div>
                 
-                <a id="modal-github-link" target="_blank" class="modal-stagger-item block w-full py-4 lg:py-5 bg-white text-dark text-center font-black uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-colors duration-300 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] lg:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] hover:translate-y-1 hover:shadow-none transition-all pointer-hover text-sm lg:text-base">VOIR LE CODE ↗</a>
+                <a id="modal-github-link" target="_blank" class="modal-stagger-item block w-full py-4 lg:py-5 bg-white text-theme-darkSurface text-center font-black uppercase tracking-widest hover:bg-theme-acc1 hover:text-theme-marqueeText transition-colors duration-300 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] lg:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] hover:translate-y-1 hover:shadow-none transition-all pointer-hover text-sm lg:text-base">VOIR LE CODE ↗</a>
             </div>
         </div>
 
-        <div id="modal-wrapper" class="flex-1 lg:w-3/5 h-full overflow-y-auto relative bg-[#F5F2E8] z-10">
+        <div id="modal-wrapper" class="flex-1 lg:w-3/5 h-full overflow-y-auto relative bg-theme-bg z-10">
             <div id="modal-content" class="p-6 lg:p-12 lg:py-20 min-h-full">
-                <div id="readme-viewer" class="readme-content w-full max-w-5xl mx-auto text-dark"></div>
+                <div id="readme-viewer" class="readme-content w-full max-w-5xl mx-auto"></div>
             </div>
         </div>
     </div>
 
     <div id="image-lightbox" class="fixed inset-0 z-[300] hidden items-center justify-center p-4 lg:p-12 pointer-events-none opacity-0">
-        <div class="absolute inset-0 bg-dark/80 backdrop-blur-md pointer-events-auto cursor-pointer pointer-hover" onclick="closeLightbox()"></div>
+        <div class="absolute inset-0 bg-theme-darkSurface/90 backdrop-blur-md pointer-events-auto cursor-pointer pointer-hover" onclick="closeLightbox()"></div>
         
         <div id="lightbox-frame" class="relative z-10 max-w-5xl w-full flex flex-col pointer-events-auto transform scale-90 opacity-0">
             
-            <div class="bg-pastelYellow border-4 border-b-0 border-dark p-3 flex justify-between items-center">
+            <div class="bg-theme-acc3 border-4 border-b-0 border-theme-border p-3 flex justify-between items-center">
                 <div class="flex gap-3">
-                    <div class="w-4 h-4 rounded-full border-2 border-dark bg-pastelPink"></div>
-                    <div class="w-4 h-4 rounded-full border-2 border-dark bg-pastelBlue"></div>
-                    <div class="w-4 h-4 rounded-full border-2 border-dark bg-pastelGreen"></div>
+                    <div class="w-4 h-4 rounded-full border-2 border-theme-border" style="background-color: var(--c-acc-2);"></div>
+                    <div class="w-4 h-4 rounded-full border-2 border-theme-border" style="background-color: var(--c-acc-1);"></div>
+                    <div class="w-4 h-4 rounded-full border-2 border-theme-border" style="background-color: var(--c-acc-4);"></div>
                 </div>
-                <span class="mono-detail font-black tracking-widest">IMAGE_PREVIEW.EXE</span>
+                <span class="mono-detail font-black tracking-widest text-theme-marqueeText">IMAGE_PREVIEW.EXE</span>
                 <button onclick="closeLightbox()" class="btn-close-modal px-2 py-1 flex items-center justify-center pointer-hover">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
-            <div class="border-4 border-dark bg-white p-4 shadow-[16px_16px_0px_0px_#111] relative">
-                <div class="absolute -top-8 -right-8 text-6xl text-pastelPink star-spin drop-shadow-[4px_4px_0px_#111]" style="z-index: 20;">✦</div>
-                <div class="absolute -bottom-6 -left-6 text-5xl text-pastelBlue star-spin drop-shadow-[4px_4px_0px_#111]" style="animation-duration: 4s; animation-direction: reverse; z-index: 20;">✦</div>
+            <div class="border-4 border-theme-border bg-theme-surface p-4 shadow-[16px_16px_0px_0px_var(--c-shadow)] relative">
+                <div class="absolute -top-8 -right-8 text-6xl text-theme-acc2 star-spin drop-shadow-[4px_4px_0px_var(--c-shadow)]" style="z-index: 20;">✦</div>
+                <div class="absolute -bottom-6 -left-6 text-5xl text-theme-acc1 star-spin drop-shadow-[4px_4px_0px_var(--c-shadow)]" style="animation-duration: 4s; animation-direction: reverse; z-index: 20;">✦</div>
                 
-                <img id="lightbox-img" src="" alt="Aperçu HD" class="w-full h-auto max-h-[75vh] object-contain border-2 border-dark bg-bg">
+                <img id="lightbox-img" src="" alt="Aperçu HD" class="w-full h-auto max-h-[75vh] object-contain border-2 border-theme-border bg-theme-bg">
             </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // --- 0. INITIALISATION LENIS (SMOOTH SCROLL) ---
-        let lenis;
-        let modalLenis; // Nouvelle variable pour la modale
+        // --- 0. ANIMATION DU CHANGEMENT DE THEME (GSAP MASK) ---
+        const themeOverlay = document.createElement('div');
+        themeOverlay.className = 'fixed rounded-full pointer-events-none z-[99999] transform -translate-x-1/2 -translate-y-1/2 top-0 left-0';
+        themeOverlay.style.width = '0px';
+        themeOverlay.style.height = '0px';
+        document.body.appendChild(themeOverlay);
+
+        function switchTheme(e) {
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            const targetColor = isDark ? '#F5F2E8' : '#050505'; // Couleur du fond qui va "envahir" l'écran
+            
+            // Placement du point de départ sur le clic
+            themeOverlay.style.left = e.clientX + 'px';
+            themeOverlay.style.top = e.clientY + 'px';
+            themeOverlay.style.backgroundColor = targetColor;
+            themeOverlay.style.opacity = '1';
+            
+            // Calcul du rayon nécessaire pour couvrir tout l'écran
+            const maxDim = Math.max(window.innerWidth, window.innerHeight);
+            const radius = Math.sqrt(Math.pow(maxDim, 2) + Math.pow(maxDim, 2));
+
+            gsap.to(themeOverlay, {
+                width: radius * 2,
+                height: radius * 2,
+                duration: 0.8,
+                ease: "expo.inOut",
+                onComplete: () => {
+                    // Une fois l'écran recouvert, on applique la classe sur le HTML pour switcher les variables
+                    document.documentElement.classList.toggle('dark-mode');
+                    updatePillTexts();
+                    
+                    // On fait disparaître le cercle pour révéler le nouveau design
+                    gsap.to(themeOverlay, {
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: "power2.out",
+                        onComplete: () => {
+                            themeOverlay.style.width = '0px';
+                            themeOverlay.style.height = '0px';
+                        }
+                    });
+                }
+            });
+        }
+
+        function updatePillTexts() {
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            document.getElementById('pill-1-text').innerText = isDark ? '#FFFFFF' : '#DCDDFF';
+            document.getElementById('pill-2-text').innerText = isDark ? '#D1D5DB' : '#FBD2F5';
+            document.getElementById('pill-3-text').innerText = isDark ? '#4B5563' : '#FFDE9F';
+            
+            // Met à jour l'attribut data-hex pour la copie
+            document.querySelectorAll('.color-pill').forEach((pill, index) => {
+                const newHex = [isDark ? '#FFFFFF' : '#DCDDFF', isDark ? '#D1D5DB' : '#FBD2F5', isDark ? '#4B5563' : '#FFDE9F'][index];
+                pill.setAttribute('data-hex', newHex);
+            });
+        }
+
+        // --- 1. INITIALISATION LENIS ---
+        let lenis, modalLenis;
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Instance principale (pour la page)
             lenis = new Lenis({
                 duration: 1.7,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
                 direction: 'vertical',
                 gestureDirection: 'vertical',
                 smooth: true,
-                mouseMultiplier: 1,
-                smoothTouch: false,
             });
 
-            // Instance secondaire (pour la modale)
             modalLenis = new Lenis({
                 wrapper: document.getElementById('modal-wrapper'),
                 content: document.getElementById('modal-content'),
@@ -402,35 +510,25 @@
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
                 smooth: true,
             });
-            modalLenis.stop(); // On la met en pause par défaut tant que la modale est fermée
+            modalLenis.stop(); 
 
             lenis.on('scroll', ScrollTrigger.update);
-
-            gsap.ticker.add((time) => {
-                lenis.raf(time * 1000);
-                modalLenis.raf(time * 1000); // On met à jour l'instance modale aussi
-            });
+            gsap.ticker.add((time) => { lenis.raf(time * 1000); modalLenis.raf(time * 1000); });
             gsap.ticker.lagSmoothing(0);
         });
 
-        // --- 1. GESTION DU CURSEUR PERSONNALISÉ ---
+        // --- 2. CURSEUR ---
         const cursor = document.getElementById('custom-cursor');
         const cursorDot = document.getElementById('cursor-dot');
-        
         let xTo = gsap.quickTo(cursor, "left", {duration: 0.2, ease: "power3"});
         let yTo = gsap.quickTo(cursor, "top", {duration: 0.2, ease: "power3"});
 
-        window.addEventListener('mousemove', (e) => {
-            xTo(e.clientX);
-            yTo(e.clientY);
-        });
+        window.addEventListener('mousemove', (e) => { xTo(e.clientX); yTo(e.clientY); });
 
         function updateCursorInteractions() {
             const interactiveElements = document.querySelectorAll('a, button, .cursor-pointer, .project-card, .pointer-hover, .readme-content img');
             interactiveElements.forEach(el => {
-                // On évite d'ajouter l'event plusieurs fois
                 if (el.dataset.cursorBound) return;
-                
                 el.addEventListener('mouseenter', () => {
                     cursorDot.style.transform = 'scale(3)';
                     cursor.style.mixBlendMode = 'normal';
@@ -442,7 +540,6 @@
                 el.dataset.cursorBound = "true";
             });
         }
-        
         updateCursorInteractions();
 
         // --- BOUTON MAGNÉTIQUE ---
@@ -454,23 +551,17 @@
                 const y = e.clientY - rect.top - rect.height / 2;
                 gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
             });
-            btn.addEventListener('mouseleave', () => {
-                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-            });
+            btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" }));
         });
 
-        // --- 2. INITIALISATION GSAP & SCROLLTRIGGER ---
-        // --- 2. INITIALISATION GSAP & SCROLLTRIGGER ---
+        // --- 3. GSAP & SCROLLTRIGGER ---
         gsap.registerPlugin(ScrollTrigger);
-
         document.addEventListener("DOMContentLoaded", () => {
-            // 1. Animation du Titre (Universelle)
             const title = document.getElementById('hero-title');
             if (title) {
                 const text = title.innerHTML.trim();
                 let newHTML = "";
                 const lines = text.split('<br>');
-                
                 lines.forEach((line, index) => {
                     const words = line.split('');
                     words.forEach(char => {
@@ -488,50 +579,27 @@
                 });
             }
 
-            // 2. Initialisation AOS (Globale)
             AOS.init({ duration: 800, once: true });
 
-            // 3. LOGIQUE ROADMAP UNIQUEMENT (Différenciée PC / Mobile)
             let mm = gsap.matchMedia();
             const roadmapItems = gsap.utils.toArray('.roadmap-item');
-
-            mm.add({
-                isDesktop: "(min-width: 1025px)",
-                isMobile: "(max-width: 1024px)"
-            }, (context) => {
+            mm.add({ isDesktop: "(min-width: 1025px)", isMobile: "(max-width: 1024px)" }, (context) => {
                 let { isDesktop, isMobile } = context.conditions;
-
-                if (isMobile) {
-                    // Config spécifique au scroll Mobile
-                    ScrollTrigger.config({ ignoreMobileResize: true });
-                }
-
+                if (isMobile) ScrollTrigger.config({ ignoreMobileResize: true });
                 roadmapItems.forEach((item) => {
-                    ScrollTrigger.create({
-                        trigger: item,
-                        // Si PC : Start 40% (Haut) | Si Mobile : Start 85% (Bas)
-                        start: isDesktop ? "top 40%" : "top 85%", 
-                        // Si PC : End 5% | Si Mobile : End 15%
-                        end: isDesktop ? "bottom 5%" : "bottom 15%",
-                        toggleClass: "is-active",
-                    });
+                    ScrollTrigger.create({ trigger: item, start: isDesktop ? "top 40%" : "top 85%", end: isDesktop ? "bottom 5%" : "bottom 15%", toggleClass: "is-active", });
                 });
             });
         });
 
-        // --- ANIMATION DES PASTILLES DE COULEUR ---
+        // --- PASTILLES ---
         const pills = document.querySelectorAll('.color-pill');
-
         pills.forEach(pill => {
             const hexText = pill.querySelector('.hex-value');
             let tl = gsap.timeline({ paused: true });
-            
-            tl.to(pill, { width: 160, borderRadius: "12px", duration: 0.4, ease: "expo.out" })
-              .to(hexText, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, "-=0.2");
-
+            tl.to(pill, { width: 160, borderRadius: "12px", duration: 0.4, ease: "expo.out" }).to(hexText, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, "-=0.2");
             pill.addEventListener('mouseenter', () => tl.play());
             pill.addEventListener('mouseleave', () => tl.reverse());
-
             pill.addEventListener('click', () => {
                 const hex = pill.getAttribute('data-hex');
                 navigator.clipboard.writeText(hex);
@@ -542,57 +610,41 @@
             });
         });
 
-        // --- 3. GESTION DE LA LIGHTBOX (PREVIEW IMAGE) ---
+        // --- 4. LIGHTBOX ---
         function openLightbox(src) {
             const lightbox = document.getElementById('image-lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             const frame = document.getElementById('lightbox-frame');
-            
             lightboxImg.src = src;
             lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
-            
-            // Apparition du fond
             gsap.to(lightbox, { opacity: 1, duration: 0.3, ease: "power2.out" });
-            // Animation "pop" de la fenêtre brutaliste
-            gsap.fromTo(frame, 
-                { scale: 0.8, opacity: 0, y: 50, rotationZ: -2 }, 
-                { scale: 1, opacity: 1, y: 0, rotationZ: 0, duration: 0.6, ease: "back.out(1.4)" }
-            );
+            gsap.fromTo(frame, { scale: 0.8, opacity: 0, y: 50, rotationZ: -2 }, { scale: 1, opacity: 1, y: 0, rotationZ: 0, duration: 0.6, ease: "back.out(1.4)" });
         }
 
         function closeLightbox() {
             const lightbox = document.getElementById('image-lightbox');
             const frame = document.getElementById('lightbox-frame');
-            
             gsap.to(frame, { scale: 0.9, opacity: 0, y: 20, rotationZ: 2, duration: 0.3, ease: "power2.in" });
             gsap.to(lightbox, { opacity: 0, duration: 0.3, ease: "power2.in", onComplete: () => {
-                lightbox.classList.add('hidden');
-                lightbox.classList.remove('flex');
+                lightbox.classList.add('hidden'); lightbox.classList.remove('flex');
             }});
         }
 
         function bindImagesToLightbox() {
-            const viewer = document.getElementById('readme-viewer');
-            const images = viewer.querySelectorAll('img');
-            images.forEach(img => {
-                img.classList.add('pointer-hover');
-                img.addEventListener('click', () => openLightbox(img.src));
-            });
-            updateCursorInteractions(); // Met à jour le custom cursor pour ces nouvelles images
+            const images = document.getElementById('readme-viewer').querySelectorAll('img');
+            images.forEach(img => { img.classList.add('pointer-hover'); img.addEventListener('click', () => openLightbox(img.src)); });
+            updateCursorInteractions(); 
         }
 
-        // --- 4. GESTION GITHUB API ---
+        // --- 5. GITHUB API ---
         const USERNAME = 'legralltitouan';
-        const COLORS = ['bg-pastelBlue', 'bg-pastelPink', 'bg-pastelYellow', 'bg-pastelGreen'];
 
         async function fetchAllPages(url, allRepos = []) {
             const response = await fetch(url);
-            if (!response.ok) throw new Error('Quota atteint ou erreur API'); 
-            
+            if (!response.ok) throw new Error('Quota API'); 
             const repos = await response.json();
             allRepos = allRepos.concat(repos);
-
             const linkHeader = response.headers.get('Link');
             if (linkHeader && linkHeader.includes('rel="next"')) {
                 const nextUrl = linkHeader.match(/<([^>]+)>;\s*rel="next"/)[1];
@@ -605,18 +657,14 @@
             try {
                 const initialUrl = `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=100`;
                 const allRepos = await fetchAllPages(initialUrl); 
-                
                 document.getElementById('repo-count').innerText = `${allRepos.length} PROJETS TROUVÉS`;
                 renderGrid(allRepos);
             } catch (error) {
-                console.warn("GitHub API Error:", error);
-                document.getElementById('repo-count').innerText = `MODE HORS-LIGNE (BACKUP)`;
-                
+                document.getElementById('repo-count').innerText = `MODE HORS-LIGNE`;
                 const fallbackRepos = [
-                    { name: "Angora Shader", language: "GLSL", description: "Shader NPR avancé pour Blender & WebGL avec support du cross-hatching temps réel.", stargazers_count: 128, forks_count: 24, default_branch: "main", html_url: "https://github.com" },
-                    { name: "Creative-Engine", language: "JavaScript", description: "Framework de rendu minimaliste basé sur la composition matricielle.", stargazers_count: 56, forks_count: 12, default_branch: "main", html_url: "https://github.com" },
-                    { name: "Neo-Brutalism-UI", language: "HTML", description: "Design system expérimental basé sur des bordures épaisses et de l'asymétrie.", stargazers_count: 89, forks_count: 5, default_branch: "main", html_url: "https://github.com" },
-                    { name: "Python-Blender-Tools", language: "Python", description: "Scripts d'automatisation pour le pipeline de rendu Blender.", stargazers_count: 42, forks_count: 8, default_branch: "main", html_url: "https://github.com" }
+                    { name: "Angora Shader", language: "GLSL", description: "Shader NPR avancé pour Blender & WebGL.", stargazers_count: 128, forks_count: 24, default_branch: "main", html_url: "https://github.com" },
+                    { name: "Creative-Engine", language: "JavaScript", description: "Framework de rendu minimaliste.", stargazers_count: 56, forks_count: 12, default_branch: "main", html_url: "https://github.com" },
+                    { name: "Neo-Brutalism-UI", language: "HTML", description: "Design system expérimental et asymétrique.", stargazers_count: 89, forks_count: 5, default_branch: "main", html_url: "https://github.com" }
                 ];
                 renderGrid(fallbackRepos);
             }
@@ -625,37 +673,34 @@
         function renderGrid(repos) {
             const grid = document.getElementById('unified-grid');
             grid.innerHTML = '';
-
             repos.forEach((repo, index) => {
-                const colorClass = COLORS[index % COLORS.length];
                 const card = document.createElement('div');
                 card.className = "group h-full";
                 card.setAttribute('data-aos', 'fade-up');
                 card.setAttribute('data-aos-delay', (index % 3) * 100);
 
+                // La variable CSS s'occupe de gérer la couleur selon la position
                 card.innerHTML = `
-                    <div class="project-card cursor-pointer" onmousemove="tilt(event, this)" onmouseleave="reset(this)" onclick="openProject('${repo.name}', '${repo.default_branch || 'main'}')">
-                        <div class="card-inner ${colorClass} p-8 flex flex-col justify-between shadow-[8px_8px_0px_0px_#111] group-hover:shadow-[16px_16px_0px_0px_#111] group-hover:-translate-y-2 transition-all duration-300">
+                    <div class="project-card cursor-pointer" onmousemove="tilt(event, this)" onmouseleave="reset(this)" onclick="openProject('${repo.name}', '${repo.default_branch || 'main'}')" style="--card-acc: var(--c-acc-${(index % 4) + 1});">
+                        <div class="card-inner dynamic-card p-8 flex flex-col justify-between">
                             <div class="flex justify-between items-start mb-20 pointer-events-none">
-                                <span class="text-4xl font-black opacity-20 group-hover:opacity-60 transition-opacity">${(index + 1).toString().padStart(2, '0')}</span>
-                                <span class="mono-detail font-bold bg-white border-2 border-dark px-3 py-1 shadow-[2px_2px_0px_0px_#111]">${repo.language || 'DATA'}</span>
+                                <span class="text-4xl font-black transition-opacity card-number-txt opacity-20 group-hover:opacity-60">${(index + 1).toString().padStart(2, '0')}</span>
+                                <span class="mono-detail font-bold bg-theme-surface border-2 border-theme-border px-3 py-1 shadow-[2px_2px_0px_0px_var(--c-border)]">${repo.language || 'DATA'}</span>
                             </div>
                             <div class="pointer-events-none">
                                 <h3 class="text-3xl font-black uppercase tracking-tighter leading-none mb-4 break-words">${repo.name}</h3>
-                                <p class="font-medium text-dark/80 line-clamp-3">${repo.description || 'Projet expérimental en cours de développement.'}</p>
+                                <p class="font-medium opacity-80 line-clamp-3">${repo.description || 'Projet expérimental en cours de développement.'}</p>
                             </div>
                         </div>
                     </div>
                 `;
                 grid.appendChild(card);
             });
-            
             setTimeout(() => { ScrollTrigger.refresh(); updateCursorInteractions(); }, 100);
         }
 
         function tilt(e, el) {
-            el.style.transition = "none";
-            const rect = el.getBoundingClientRect();
+            el.style.transition = "none"; const rect = el.getBoundingClientRect();
             const x = ((e.clientX - rect.left) / rect.width - 0.5) * 15;
             const y = ((e.clientY - rect.top) / rect.height - 0.5) * -15;
             el.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale3d(1.02, 1.02, 1.02)`;
@@ -670,25 +715,15 @@
             const modal = document.getElementById('project-modal');
             modal.classList.add('open');
             document.body.style.overflow = 'hidden';
-            
-            // Switch des instances Lenis
             if(typeof lenis !== 'undefined') lenis.stop();
-            if(typeof modalLenis !== 'undefined') {
-                modalLenis.start();
-                modalLenis.scrollTo(0, { immediate: true }); // Reset en haut de page instantané
-            }
+            if(typeof modalLenis !== 'undefined') { modalLenis.start(); modalLenis.scrollTo(0, { immediate: true }); }
             
-            gsap.fromTo(".modal-stagger-item", 
-                { y: 30, opacity: 0 }, 
-                { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out", delay: 0.3 }
-            );
+            gsap.fromTo(".modal-stagger-item", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out", delay: 0.3 });
 
-            // Fetch infos du repo
             try {
                 const res = await fetch(`https://api.github.com/repos/${USERNAME}/${name}`);
                 if(!res.ok) throw new Error("Offline");
                 const repo = await res.json();
-
                 document.getElementById('modal-title').innerText = repo.name;
                 document.getElementById('modal-description').innerText = repo.description || '';
                 document.getElementById('modal-lang').innerText = repo.language || 'SOURCE';
@@ -697,68 +732,35 @@
                 document.getElementById('modal-github-link').href = repo.html_url;
             } catch(e) {
                 document.getElementById('modal-title').innerText = name;
-                document.getElementById('modal-description').innerText = "Description générée en mode hors-ligne pour la simulation de l'API.";
-                document.getElementById('modal-stars').innerText = Math.floor(Math.random() * 100);
+                document.getElementById('modal-description').innerText = "Mode hors-ligne.";
+                document.getElementById('modal-stars').innerText = "0";
                 document.getElementById('modal-lang').innerText = 'HORS-LIGNE';
             }
 
-            // Fetch README et Animation
             const viewer = document.getElementById('readme-viewer');
             viewer.innerHTML = '<div class="flex justify-center items-center h-64"><p class="mono-detail animate-pulse py-20 text-center text-xl">COMPILING DOCUMENTATION...</p></div>';
 
             try {
-                const readmeRes = await fetch(`https://api.github.com/repos/${USERNAME}/${name}/readme`, {
-                    headers: { 'Accept': 'application/vnd.github.v3.raw' }
-                });
+                const readmeRes = await fetch(`https://api.github.com/repos/${USERNAME}/${name}/readme`, { headers: { 'Accept': 'application/vnd.github.v3.raw' }});
                 if(!readmeRes.ok) throw new Error("No Readme");
                 let text = await readmeRes.text();
                 const rawUrl = `https://raw.githubusercontent.com/${USERNAME}/${name}/${branch}/`;
                 text = text.replace(/!\[(.*?)\]\((?!http)(.*?)\)/g, `![$1](${rawUrl}$2)`);
                 text = text.replace(/<img([^>]+)src=["'](?!http)([^"']+)["']/g, `<img$1src="${rawUrl}$2"`);
-                
                 viewer.innerHTML = marked.parse(text);
-                setTimeout(bindImagesToLightbox, 100); // <-- Relie les images à la Lightbox une fois le DOM chargé
+                setTimeout(bindImagesToLightbox, 100); 
             } catch (e) { 
-                const fallbackMarkdown = `
-# ${name}
-
-> **⚠️ API GITHUB HORS-LIGNE**
-> La documentation ci-dessous est générée dynamiquement car l'API de GitHub a atteint sa limite de requêtes.
-
-Bienvenue sur le dépôt expérimental de **${name}**. 
-
-## 📸 Aperçu (Clique sur l'image pour tester la Lightbox !)
-![Test Lightbox Neo-Brutaliste](https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop)
-
-## 💻 Installation & Usage
-Pour compiler le projet en local, lancez :
-
-\`\`\`bash
-git clone https://github.com/legralltitouan/${name.toLowerCase()}.git
-cd ${name.toLowerCase()}
-npm install
-npm run dev
-\`\`\`
-                `;
-                viewer.innerHTML = marked.parse(fallbackMarkdown);
-                setTimeout(bindImagesToLightbox, 100); // <-- Relie les images à la Lightbox pour le fallback aussi
+                viewer.innerHTML = marked.parse(`# ${name}\n\n> **⚠️ API GITHUB HORS-LIGNE**\n> La documentation est indisponible.\n\n![Aperçu](https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop)`);
+                setTimeout(bindImagesToLightbox, 100); 
             }
-
-            // Animation GSAP du contenu
-            gsap.fromTo("#readme-viewer > *", 
-                { y: 30, opacity: 0 }, 
-                { y: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "power2.out", delay: 0.1 }
-            );
+            gsap.fromTo("#readme-viewer > *", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "power2.out", delay: 0.1 });
         }
 
         function closeProject() {
             document.getElementById('project-modal').classList.remove('open');
             document.body.style.overflow = 'auto';
-            
-            // Switch inverse des instances Lenis
             if(typeof lenis !== 'undefined') lenis.start();
             if(typeof modalLenis !== 'undefined') modalLenis.stop();
-
             gsap.set(".modal-stagger-item", { opacity: 0 });
             gsap.set("#readme-viewer > *", { opacity: 0 });
         }
